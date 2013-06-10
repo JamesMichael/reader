@@ -3,6 +3,10 @@ use warnings;
 use strict;
 
 use Reader::API::Router qw( GET POST );
+use FindBin;
+use lib "$FindBin::Bin/../../model/lib";
+
+use Reader::Model;
 
 # return auth token
 GET '/token' => sub {
@@ -14,35 +18,59 @@ GET '/token' => sub {
 
 # unread count, either total or for a feed
 GET '/stats/count/[:state]/[:feedid]' => sub {
-    (200, { }, { unread_count => 123 })
+    my ($parameters, $request) = @_;
+
+    my $model = Reader::Model::model();
+    my $resultset = $model->resultset('Item')->search(
+        {
+            $parameters->{state}    ? ('state.state' => $parameters->{state})   : (),
+            $parameters->{feedid}   ? ('me.feed_id'   => $parameters->{feedid})  : (),
+        },
+        {
+            join => 'state',
+        },
+    );
+
+    (200, { }, { count => $resultset->count });
 };
 
 # feed list
 GET '/feeds' => sub {
-    (200, { }, {
-        feeds => [
-            {
-                id          => 1,
-                uri         => 'http://example.com/feed.xml',
-                title       => 'An Example RSS Feed',
-                link        => 'http://example.com/news',
-                description => 'Lorem ipsum dolor sit amet',
-                author      => 'John Doe',
-            },
-        ],
-    })
+    my ($parameters, $request) = @_;
+
+    my $model = Reader::Model::model();
+    my $resultset = $model->resultset('Feed')->search(
+        {
+        },
+        {
+        },
+    );
+
+    my @feeds;
+    while (my $feed = $resultset->next) {
+        push @feeds, $feed->feed;
+    }
+
+    (200, { }, { feeds => \@feeds });
 };
 
 # a specific feed
 GET '/feeds/:id' => sub {
-    (200, { }, {
-        id          => 1,
-        uri         => 'http://example.com/feed.xml',
-        title       => 'An Example RSS Feed',
-        link        => 'http://example.com/news',
-        description => 'Lorem ipsum dolor sit amet',
-        author      => 'John Doe',
-    })
+    my ($parameters, $request) = @_;
+
+    my $model = Reader::Model::model();
+    my $resultset = $model->resultset('Feed')->search(
+        {
+            'me.id' => $parameters->{id},
+        },
+        {
+        },
+    );
+
+    my $feed = $resultset->first;
+
+    return (200, { }, $feed->feed) if $feed;
+    return (404, { }, 'invalid feed id');
 };
 
 # add tags, change name
@@ -56,32 +84,44 @@ POST '/feeds/:id' => sub {
 
 # all items (optionally filtered by state)
 GET '/list/[:state]' => sub {
-    (200, { }, {
-        items => [
-            {
-                id          => 1,
-                feed_id     => 1,
-                title       => 'Example Entry',
-                link        => 'http://example.com/news/example-entry',
-                content     => '<strong>Lorem ipsum dolor sit amet</strong><p>...</p>',
-                summary     => 'Lorem ipsum dolor sit amet',
-                published   => '2013-06-08 13:09:00',
-            },
-        ],
-    })
+    my ($parameters, $request) = @_;
+
+    my $model = Reader::Model::model();
+    my $resultset = $model->resultset('Item')->search(
+        {
+            $parameters->{state} ? ('state.state' => $parameters->{state}) : (),
+        },
+        {
+            join => 'state',
+        },
+    );
+
+    my @items;
+    while (my $item = $resultset->next) {
+        push @items, $item->item;
+    }
+
+    (200, { }, { items => \@items });
 };
 
 # get a specific item
 GET '/items/:id' => sub {
-    (200, { }, {
-        id          => 1,
-        feed_id     => 1,
-        title       => 'Example Entry',
-        link        => 'http://example.com/news/example-entry',
-        content     => '<strong>Lorem ipsum dolor sit amet</strong><p>...</p>',
-        summary     => 'Lorem ipsum dolor sit amet',
-        published   => '2013-06-08 13:09:00',
-    })
+    my ($parameters, $request) = @_;
+
+    my $model = Reader::Model::model();
+    my $resultset = $model->resultset('Item')->search(
+        {
+            'me.id' => $parameters->{id},
+        },
+        {
+            join => 'state',
+        },
+    );
+
+    my $item = $resultset->first;
+
+    return (200, { }, $item->item) if $item;
+    return (404, { }, 'invalid item id');
 };
 
 # update an item, POST data contains actions
