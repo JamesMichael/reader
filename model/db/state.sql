@@ -1,0 +1,4 @@
+CREATE TABLE state (
+    id INTEGER PRIMARY KEY,
+    state TEXT NOT NULL
+);
