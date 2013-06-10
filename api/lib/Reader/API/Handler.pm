@@ -7,11 +7,17 @@ has parameters  => ( is => 'ro', isa => 'ArrayRef[Str]' );
 has action      => ( is => 'ro', isa => 'CodeRef'       );
 
 sub run {
-    my $self = shift;
+    my ($self, $request) = @_;
 
-    # TODO: set parameters
+    # extract named parameters from the path
+    my @parameters = ($request->{request}->uri->path =~ $self->regex);
+    my @parameter_names = @{$self->parameters};
+    my %parameters;
+    foreach my $i (0..$#parameter_names) {
+        $parameters{$parameter_names[$i]} = $parameters[$i];
+    }
 
-    $self->{action}->(@_);
+    $self->{action}->(\%parameters, @_);
 };
 
 sub as_string {
