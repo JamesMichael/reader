@@ -126,9 +126,27 @@ GET '/items/:id' => sub {
 
 # update an item, POST data contains actions
 POST '/items/:id' => sub {
-    (200, { }, {
-        message     => 'success',
-    })
+    my ($parameters, $request) = @_;
+
+    my $model = Reader::Model::model();
+    my $item = $model->resultset('Item')->find($parameters->{id});
+    return (404, { }, 'invalid item id') unless $item;
+
+    my $actions = $request->{post_params};
+    foreach my $action (keys %$actions) {
+        if ($action eq 'mark-read') {
+            my $value = $actions->{$action} ? 'read' : 'unread';
+            my $state = $model->resultset('State')->search({
+                    'me.state' => $value,
+            })->single;
+            $item->state($state);
+            next;
+        }
+    }
+
+    $item->update;
+
+    (200, { }, {message => 'success'})
 };
 
 # search through items

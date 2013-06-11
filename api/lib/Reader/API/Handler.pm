@@ -17,7 +17,7 @@ sub run {
         $parameters{$parameter_names[$i]} = $parameters[$i];
     }
 
-    $self->{action}->(\%parameters, @_);
+    $self->{action}->(\%parameters, $request);
 };
 
 sub as_string {
