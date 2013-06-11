@@ -75,7 +75,7 @@ GET '/feeds/:id' => sub {
 
 # add tags, change name
 # post query specifies actions to be performed
-POST '/feeds/:id' => sub {
+POST '/feeds/edit/:id' => sub {
     (200, { }, {
         message     => 'success',
     })
