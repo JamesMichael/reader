@@ -23,4 +23,30 @@ sub parse_header {
     };
 }
 
+sub parse_items {
+    my ($class, $xpath) = @_;
+
+    my @items;
+    my $item_nodeset = $xpath->find('/feed/entry');
+    foreach my $item_context ($item_nodeset->get_nodelist) {
+        push @items, parse_item($xpath, $item_context);
+    }
+
+    return \@items;
+}
+
+sub parse_item {
+    my ($xpath, $context) = @_;
+
+    my $link_nodeset = $xpath->find('./link[@rel != "alternate" and @rel != "edit"]/@href', $context);
+    my @links = map { $_->string_value } $link_nodeset->get_nodelist;
+
+    return {
+        title       => $xpath->find('./title', $context)->string_value,
+        published   => $xpath->find('./updated', $context)->string_value,
+        summary     => $xpath->find('./summary', $context)->string_value,
+        links       => \@links,
+    };
+}
+
 1;

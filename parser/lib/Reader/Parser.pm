@@ -18,6 +18,7 @@ sub parse {
                : 'Reader::Parser::Atom';
 
     my $header = $parser->parse_header($xpath);
+    my $items  = $parser->parse_items($xpath);
 }
 
 sub detect_document_type {
