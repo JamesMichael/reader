@@ -81,6 +81,34 @@ POST '/feeds/edit/:id' => sub {
     })
 };
 
+POST '/feeds/new' => sub {
+    my ($parameters, $request) = @_;
+
+    my $uri = $request->{post_params}{uri};
+    return (400, { }, 'uri not specified') unless $uri;
+
+    my $model = Reader::Model::model();
+
+    # check the feed doesn't already exist
+    my $count = $model->resultset('Feed')->count({
+        'me.uri' => $uri,
+    });
+    if ($count) {
+        return (400, { }, 'uri already exists');
+    }
+
+    # add feed to database
+    # the fields will be updated once the feed is fetched
+    my $feed = $model->resultset('Feed')->create({
+        uri         => $uri,
+        title       => '',
+        link        => '',
+        description => '',
+        author      => '',
+    });
+
+    (200, { }, $feed->feed)
+};
 
 # all items (optionally filtered by state)
 GET '/list/[:state]' => sub {
