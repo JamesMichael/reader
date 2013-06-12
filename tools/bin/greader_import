@@ -1,0 +1,84 @@
+#!/usr/bin/env perl
+use warnings;
+use strict;
+
+use FindBin;
+use lib "$FindBin::Bin/../../model/lib";
+
+use Getopt::Long;
+use XML::XPath;
+use Reader::Model;
+
+my $verbose;
+my $filename = '';
+GetOptions(
+    'v|verbose'     => \$verbose,
+    'i|input=s'     => \$filename,
+) or die 'Invalid options';
+-f $filename or die 'Invalid filename';
+
+binmode STDERR, ':encoding(UTF-8)';
+
+my $xpath = XML::XPath->new( filename => $filename );
+
+my $title = $xpath->getNodeText('/opml/head/title');
+print STDERR "loading subscriptions from '$title'\n" if $verbose;
+
+my $model = Reader::Model::model();
+
+my $subscription_count = 0;
+my $subscriptions = $xpath->find('//outline[@type="rss"]');
+foreach my $context ($subscriptions->get_nodelist) {
+    my $uri     = $xpath->find('./@xmlUrl', $context)->string_value;
+    my $link    = $xpath->find('./@htmlUrl', $context)->string_value;
+    my $title   = $xpath->find('./@title', $context)->string_value;
+
+    print STDERR "adding description '$title'\n" if $verbose;
+    add_feed($model, $uri, $title, $link);
+
+    $subscription_count++;
+}
+
+print STDERR "added $subscription_count subcriptions\n" if $verbose;
+
+sub add_feed {
+    my ($model, $uri, $link, $title) = @_;
+
+    my $feed = $model->resultset('Feed')->create({
+        uri         => $uri,
+        title       => $title,
+        link        => $link,
+        description => $title,
+        author      => '',
+    });
+}
+
+=head1 NAME
+
+greader_import - Import google reader subscriptions
+
+=head1 USAGE
+
+greader_import --input <subscriptions.xml> [--verbose]
+
+=head1 OPTIONS
+
+=over 4
+
+=item --input SUBSCRIPTIONS_FILE
+
+Path to the subscriptions.xml file exported from Google Reader.
+
+=item --verbose
+
+Optional. Lists subscriptions added on std err.
+
+=back
+
+=head1 DETAILS
+
+=over 4
+
+=item * assumes each feed is not presently in the database
+
+=cut
