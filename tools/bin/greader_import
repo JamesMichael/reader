@@ -10,16 +10,14 @@ use XML::XPath;
 use Reader::Model;
 
 my $verbose;
-my $filename = '';
 GetOptions(
     'v|verbose'     => \$verbose,
-    'i|input=s'     => \$filename,
 ) or die 'Invalid options';
--f $filename or die 'Invalid filename';
 
+binmode STDIN, ':encoding(UTF-8)';
 binmode STDERR, ':encoding(UTF-8)';
 
-my $xpath = XML::XPath->new( filename => $filename );
+my $xpath = XML::XPath->new( ioref => \*STDIN );
 
 my $title = $xpath->getNodeText('/opml/head/title');
 print STDERR "loading subscriptions from '$title'\n" if $verbose;
@@ -59,15 +57,11 @@ greader_import - Import google reader subscriptions
 
 =head1 USAGE
 
-greader_import --input <subscriptions.xml> [--verbose]
+greader_import [--verbose] < subscriptions.xml
 
 =head1 OPTIONS
 
 =over 4
-
-=item --input SUBSCRIPTIONS_FILE
-
-Path to the subscriptions.xml file exported from Google Reader.
 
 =item --verbose
 

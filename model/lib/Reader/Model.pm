@@ -6,7 +6,12 @@ use Readonly;
 Readonly my $DATABASE_FILE => "$FindBin::Bin/../../model/reader.db";
 
 sub model {
-    my $model = Reader::Model->connect( "dbi:SQLite:$DATABASE_FILE" );
+    my $model = Reader::Model->connect(
+        "dbi:SQLite:$DATABASE_FILE",
+        '',
+        '',
+        { sqlite_unicode => 1 },
+    );
     return $model;
 }
 

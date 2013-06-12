@@ -7,6 +7,7 @@ use IO::Socket;
 use URI::Escape;
 use HTTP::Request;
 use HTTP::Response;
+use Encode;
 
 use Reader::API::Router qw( route );
 
@@ -77,11 +78,12 @@ sub _handle_request {
         $response->header($header => $value);
     }
 
-    $response->header('Content-Type' => $format->mime_type);
+    $response->header('Content-Type' => $format->mime_type . '; charset=utf-8');
     $response->content($format->format_response($content));
 
     # output response
-    print $socket $response->as_string;
+    binmode $socket, ':encoding(UTF-8)';
+    print $socket Encode::decode_utf8($response->as_string);
 }
 
 # reads the http from the socket into a HTTP::Request
