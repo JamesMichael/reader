@@ -78,8 +78,10 @@ DELETE '/feeds/:id' => sub {
 
     my $model = Reader::Model::model();
     my $feed = $model->resultset('Feed')->find($parameters->{id});
-    $feed->delete;
 
+    return (404, { }, { message => 'invalid feed id' }) unless $feed;
+
+    $feed->delete;
     return (200, { }, { message => 'success' });
 };
 
