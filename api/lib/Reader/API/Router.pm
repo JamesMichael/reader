@@ -4,7 +4,7 @@ use strict;
 
 use URI;
 use Exporter qw(import);
-our @EXPORT = qw( GET POST route );
+our @EXPORT = qw( GET POST DELETE route );
 
 use Reader::API::Format;
 use Reader::API::Handler;
@@ -56,6 +56,10 @@ sub GET($$) {
 
 sub POST($$) {
     _define_route('POST', @_);
+}
+
+sub DELETE($$) {
+    _define_route('DELETE', @_);
 }
 
 sub _define_route {
