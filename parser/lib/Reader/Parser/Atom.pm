@@ -42,6 +42,7 @@ sub parse_item {
     my @links = map { $_->string_value } $link_nodeset->get_nodelist;
 
     return {
+        guid        => $xpath->find('./id', $context)->string_value,
         title       => $xpath->find('./title', $context)->string_value,
         published   => $xpath->find('./updated', $context)->string_value,
         summary     => $xpath->find('./summary', $context)->string_value,
