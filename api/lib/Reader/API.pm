@@ -2,7 +2,7 @@ package Reader::API;
 use warnings;
 use strict;
 
-use Reader::API::Router qw( GET POST );
+use Reader::API::Router qw( GET POST DELETE );
 use FindBin;
 use lib "$FindBin::Bin/../../model/lib";
 
@@ -71,6 +71,16 @@ GET '/feeds/:id' => sub {
 
     return (200, { }, $feed->feed) if $feed;
     return (404, { }, 'invalid feed id');
+};
+
+DELETE '/feeds/:id' => sub {
+    my ($parameters, $request) = @_;
+
+    my $model = Reader::Model::model();
+    my $feed = $model->resultset('Feed')->find($parameters->{id});
+    $feed->delete;
+
+    return (200, { }, { message => 'success' });
 };
 
 # add tags, change name
