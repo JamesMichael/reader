@@ -59,16 +59,7 @@ GET '/feeds/:id' => sub {
     my ($parameters, $request) = @_;
 
     my $model = Reader::Model::model();
-    my $resultset = $model->resultset('Feed')->search(
-        {
-            'me.id' => $parameters->{id},
-        },
-        {
-        },
-    );
-
-    my $feed = $resultset->first;
-
+    my $feed = $model->resultset('Feed')->find($parameters->{id});
     return (200, { }, $feed->feed) if $feed;
     return (404, { }, 'invalid feed id');
 };
