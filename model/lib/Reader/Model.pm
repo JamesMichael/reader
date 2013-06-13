@@ -1,9 +1,8 @@
 package Reader::Model;
 use base qw(DBIx::Class::Schema);
 
-use FindBin;
 use Readonly;
-Readonly my $DATABASE_FILE => "$FindBin::Bin/../../model/reader.db";
+Readonly my $DATABASE_FILE => "/vhosts/reader/db/reader.db";
 
 sub model {
     my $model = Reader::Model->connect(
