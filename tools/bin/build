@@ -32,7 +32,7 @@ source0_filename=$(rpm -q --specfile $SPECFILE --queryformat "$source0_template"
 (cd ..; tar -czf "$source0_filename" "$cwd")
 
 # copy Source0 to SOURCES
-cp "../$source0_filename" "$SOURCES_DIR"
+mv "../$source0_filename" "$SOURCES_DIR"
 
 # build rpm
 # rpmbuild is very verbose, so output to a file instead
