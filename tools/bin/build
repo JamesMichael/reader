@@ -8,6 +8,30 @@ BUILD_DIR="${RPMBUILD_DIR}/BUILD"
 SOURCES_DIR="${RPMBUILD_DIR}/SOURCES"
 
 SPECFILE=$1
+
+# attempt to determine the specfile if not specified
+if [ -z "$SPECFILE" ]
+then
+    shopt -s nullglob
+    SPECFILES=(*.spec)
+
+    if [ ${#SPECFILES[@]} -eq 0 ]
+    then
+        echo 'No specfiles found in the current directory' 1>&2
+        echo "USAGE: $0 abc.spec" 1>&2
+        exit 1
+    fi
+
+    if [ ${#SPECFILES[@]} -gt 1 ]
+    then
+        echo 'Too many specfiles found in current directory' 1>&2
+        echo "USAGE: $0 abc.spec" 1>&2
+        exit 1
+    fi
+
+    SPECFILE="${SPECFILES[0]}"
+fi
+
 if [ ! -f $SPECFILE ]
 then
     echo "No such file: $SPECFILE" 1>&2
