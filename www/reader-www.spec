@@ -46,5 +46,5 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Fri Jul 14 2013 <jamesamichael@gmail.com> 0.1-1
+* Fri Jul 14 2013 <James Michael> - 0.1-1
 - Initial www package
