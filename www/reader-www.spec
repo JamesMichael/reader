@@ -41,7 +41,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,nginx,nginx,-)
 
-%attr(-,root,root,-) /vhosts/reader/etc/reader.conf
+%attr(-,root,root) /vhosts/reader/etc/reader.conf
 /vhosts/reader/htdocs/index.html
 
 
