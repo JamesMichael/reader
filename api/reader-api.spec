@@ -17,6 +17,8 @@ Requires:	perl(Readonly)
 Requires:	perl(DBIx::Class)
 Requires:	perl(HTTP::Message)
 
+Requires:	reader-model
+
 %description
 Server providing API access to reader.
 
