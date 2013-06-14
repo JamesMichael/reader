@@ -1,6 +1,6 @@
 Name:		reader-api
 Version:	0.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Reader API server
 
 Group:		Applications/Internet
@@ -61,5 +61,5 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Fri Jul 14 2013 <James Michael> - 0.1-1
+* Fri Jul 14 2013 <James Michael> - 0.1-2
 - Initial api package

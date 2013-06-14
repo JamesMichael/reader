@@ -3,9 +3,6 @@ use warnings;
 use strict;
 
 use Reader::API::Router qw( GET POST DELETE );
-use FindBin;
-use lib "$FindBin::Bin/../../model/lib";
-
 use Reader::Model;
 
 # return auth token
