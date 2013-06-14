@@ -35,7 +35,7 @@ Server providing API access to reader.
 rm -rf %{buildroot}
 
 install -m 0755 -d %{buildroot}/opt/reader/bin/
-install -m 0644 bin/* %{buildroot}/opt/reader/bin
+install -m 0755 bin/* %{buildroot}/opt/reader/bin
 
 find lib -type d -print0 \
     | xargs -0 -I@ install -m 0755 -d %{buildroot}/opt/reader/@
