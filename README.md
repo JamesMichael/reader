@@ -32,7 +32,15 @@
 * [DBIx::Class](https://metacpan.org/module/DBIx::Class)
 * [HTTP::Message](https://metacpan.org/module/GAAS/HTTP-Message-6.06/lib/HTTP/Message.pm)
 
-### Running
+#### Packages
+
+* reader-model
+
+### Building
 
     cd api
-    bin/api_server
+    ../tools/bin/build
+
+### Running
+
+    /opt/reader/bin/api_server --port <PORT>
