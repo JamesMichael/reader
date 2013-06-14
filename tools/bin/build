@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# USAGE: build abc.spec
+# tarballs current directory copies to 
+
+# RPMBUILD settings
+RPMBUILD_DIR="${HOME}/rpmbuild"
+BUILD_DIR="${RPMBUILD_DIR}/BUILD"
+SOURCES_DIR="${RPMBUILD_DIR}/SOURCES"
+
+SPECFILE=$1
+if [ ! -f $SPECFILE ]
+then
+    echo "No such file: $SPECFILE" 1>&2
+    exit 1
+fi
+
+if [ "$(dirname $SPECFILE)" != "." ]
+then
+    # could probably just pushd to the proper location instead
+    echo 'build must be called from the same directory as the specfile is located' 1>&2
+    exit 1
+fi
+
+# current working directory name
+cwd=$(basename $(pwd))
+
+# determine the file name for Source0 tarball
+source0_template=$(grep '^Source0:' $SPECFILE | sed 's/^Source0:\s\+//')
+source0_filename=$(rpm -q --specfile $SPECFILE --queryformat "$source0_template")
+
+# build Source0 tarball of current directory
+(cd ..; tar -czf "$source0_filename" "$cwd")
+
+# copy Source0 to SOURCES
+cp "../$source0_filename" "$SOURCES_DIR"
+
+# build rpm
+# rpmbuild is very verbose, so output to a file instead
+rpmbuild -ba "$SPECFILE" &> build.log
+
+# show the build log and quit on error
+if [ $? -ne 0 ]
+then
+    less build.log
+    exit 1;
+fi
+
+# tidy up after ourselves
+rm build.log
+rm "${SOURCES_DIR}/$source0_filename"
+rm -rf "${BUILD_DIR}/${cwd}"
