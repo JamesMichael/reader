@@ -1,0 +1,116 @@
+#!/usr/bin/env perl
+use warnings;
+use strict;
+use lib '/opt/reader/lib';
+
+use Reader::Parser;
+use Reader::Model;
+
+use Readonly;
+Readonly my $MAX_ITERATIONS => 10;
+
+my $model = Reader::Model::model;
+
+my $iteration_count = $MAX_ITERATIONS;
+while ($iteration_count--) {
+
+    my $fetch = get_next_fetch($model);
+    unless ($fetch) {
+        print "[INFO] No more items in queue\n";
+        last;
+    }
+
+    # parse item
+    my ($result, $header, $items) = Reader::Parser::parse($filename);
+
+    unless ($result) {
+        print "[ERROR] Could not parse feed: $filename\n";
+        next;
+    }
+
+    my $feed = $model->resultset('Feed')->find($fetch->feed_id);
+
+    $result = update_feed($feed, $header);
+    foreach my $item (@$items) {
+        $result = update_item($model, $feed, $item);
+    }
+}
+
+sub get_next_fetch {
+
+}
+
+sub update_feed {
+    my ($feed, $data) = @_;
+
+    $feed->title($data->{title});
+    $feed->link(join ', ', @{$data->{links}});
+    $feed->description($data->{description});
+    $feed->author(join ', ', @{$data->{authors}});
+
+    if ($feed->is_changed) {
+        my %columns = $feed->get_dirty_columns;
+        my $description = join ', ', map { "$_ => $columns{$_}" } keys %columns;
+        print "[INFO] FEED ", $feed->id, ": updated $description\n";
+        $feed->update;
+    } else {
+        print "[INFO] FEED ", $feed->id, ": no change\n";
+    }
+
+    return $feed;
+}
+
+sub update_item {
+    my ($model, $feed, $data) = @_;
+
+    # check if item already exists
+    my $unique_id = $data->{guid} || @{$data->{links}}[0];
+    my $item = $model->resultset('Item')->search(
+        {
+            -and => [
+                guid    => $unique_id,
+                feed_id => $feed->id,
+            ]
+        }
+    )->single;
+
+    if ($item) {
+        # update existing item
+        $item->title($data->{title});
+        $item->link(join ', ', @{$data->{links}});
+        $item->content($data->{summary});
+        $item->published($data->{published});
+
+        if ($item->is_changed) {
+            my %columns = $item->get_dirty_columns;
+            my $description = join ', ', map { "$_ => $columns{$_}" } keys %columns;
+            print "[INFO] FEED ", $feed->id, " ITEM ", $item->id, ": updated $description\n";
+            $item->update;
+        } else {
+            print "[INFO] FEED ", $feed->id, " ITEM ", $item->id, ": no change\n";
+        }
+    } else {
+        # insert new item
+        my $state = $model->resultset('State')->search({
+                'me.state' => 'unread',
+        })->single;
+
+        $item = $model->resultset('Item')->create({
+            feed_id     => $feed->id,
+            state_id    => $state->id,
+            guid        => $unique_id,
+            title       => $data->{title},
+            link        => join(', ', @{$data->{links}}),
+            content     => $data->{summary},
+            published   => $data->{published},
+        });
+
+        if ($item) {
+            print "[INFO] FEED ", $feed->id, " ITEM ", $item->id, ": added new item\n";
+        } else {
+            print "[ERROR] FEED ", $feed->id, " ITEM ", $data->{title}, ": could not be added\n";
+        }
+    }
+
+    return $item;
+}
