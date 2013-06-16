@@ -13,7 +13,6 @@ sub item {
         summary     => $self->content,
         published   => $self->published,
         state       => $self->state->state,
-
     };
 
 }
