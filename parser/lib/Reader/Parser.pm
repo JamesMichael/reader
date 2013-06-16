@@ -12,13 +12,15 @@ sub parse {
     my $xpath = XML::XPath->new( filename => $filename );
 
     my $document_type = detect_document_type($xpath);
-    croak "Cannot detect document type: $filename" if $document_type eq 'unknown';
+    return 0 if $document_type eq 'unknown';
 
     my $parser = $document_type eq 'rss'    ? 'Reader::Parser::RSS'
                : 'Reader::Parser::Atom';
 
     my $header = $parser->parse_header($xpath);
     my $items  = $parser->parse_items($xpath);
+
+    return (1, $header, $items);
 }
 
 sub detect_document_type {
