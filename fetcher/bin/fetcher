@@ -33,6 +33,11 @@ while ($iteration_count--) {
 
     if ($result) {
         print "[INFO] successfully fetched $feed_id\n";
+        $fetch->{feed}->create_related('fetches', {
+            fetch_date  => DateTime->now->epoch,
+            filename    => "$feed_id.xml",
+            status      => 'fetched',
+        });
     } else {
         print "[ERROR] error fetching $feed_id \n";
     }
