@@ -23,11 +23,17 @@ sub fetch {
     my $ua = LWP::UserAgent->new;
     $ua->agent('Mozilla/8.0');
 
-    my $request = GET $uri;
-    my $result = $ua->request($request, $filename);
+    my $result = $ua->get($uri,
+        'Accept-Encoding' => HTTP::Message::decodable,
+    );
 
     if ($result->is_success) {
         print "Successfully downloaded\n";
+
+        open my $outfh, '>', $filename or croak $!;
+        print $outfh $result->decoded_content(charset => 'none');
+        close $outfh;
+
         return 1;
     } else {
         print "Failed: " . $result->status_line, "\n";
