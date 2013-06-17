@@ -1,0 +1,40 @@
+#!/usr/bin/env perl
+use warnings;
+use strict;
+use lib '/opt/reader/lib';
+
+use Reader::Model;
+use Reader::Parser;
+
+use Readonly;
+Readonly my $MAX_ITERATIONS => 10;
+
+my $model = Reader::Model::model;
+
+my $iteration_count = $MAX_ITERATIONS;
+while ($iteration_count--) {
+    
+    my $fetch = pop_fetch_queue($model);
+    last unless $fetch;
+    
+    my $feed_id = $fetch->feed_id;
+    
+    my $result = Reader::Parser::parse(
+        feed_id     => $feed_id,
+    );
+    
+    if ($result) {
+        print "[INFO] successfully fetched $feed_id\n";
+    } else {
+        print "[ERROR] error fetching $feed_id \n";
+    }
+    
+}
+
+sub pop_fetch_queue {
+
+}
+
+sub push_fetch_info {
+
+}
