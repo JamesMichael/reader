@@ -18,5 +18,5 @@ __PACKAGE__->table('feed');
 __PACKAGE__->add_columns(qw( id uri title link description author priority ));
 __PACKAGE__->set_primary_key('id');
 __PACKAGE__->has_many(items => 'Reader::Model::Result::Item', 'feed_id');
-__PACKAGE__->has_many(fetches => 'Reader::Model::Result::Fetch', 'feed_id');
+__PACKAGE__->has_many(fetches => 'Reader::Model::Result::Fetch', 'feed_id', { order_by => { -desc => 'fetch_date' } });
 1;
