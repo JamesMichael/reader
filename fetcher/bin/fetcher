@@ -43,6 +43,9 @@ while ($iteration_count--) {
     }
 }
 
+$iteration_count = $MAX_ITERATIONS - $iteration_count;
+print "[INFO] finished: ran $iteration_count / $MAX_ITERATIONS iterations\n";
+
 sub build_fetch_queue {
     my $model = shift;
     my @unordered_queue;
