@@ -4,37 +4,77 @@ use strict;
 use lib '/opt/reader/lib';
 
 use Reader::Model;
-use Reader::Parser;
+use Reader::Fetcher;
+
+use DateTime;
 
 use Readonly;
 Readonly my $MAX_ITERATIONS => 10;
 
+Readonly my %FETCH_INTERVALS => (
+    very_low    => 1440,    # 1 day
+    low         => 360,     # 6 hours
+    normal      => 180,     # 3 hours
+    high        => 60,      # 1 hour
+    very_high   => 30,      # 30 minutes
+);
+
 my $model = Reader::Model::model;
+my $queue = build_fetch_queue($model);
 
 my $iteration_count = $MAX_ITERATIONS;
 while ($iteration_count--) {
-    
-    my $fetch = pop_fetch_queue($model);
+    my $fetch = pop_fetch_queue($queue);
     last unless $fetch;
-    
-    my $feed_id = $fetch->feed_id;
-    
-    my $result = Reader::Parser::parse(
-        feed_id     => $feed_id,
-    );
-    
+
+    my $feed_id = $fetch->{feed}->id;
+    print "Processing $feed_id\n";
+    my $result = Reader::Fetcher::fetch($fetch->{feed});
+
     if ($result) {
         print "[INFO] successfully fetched $feed_id\n";
     } else {
         print "[ERROR] error fetching $feed_id \n";
     }
-    
+}
+
+sub build_fetch_queue {
+    my $model = shift;
+    my @unordered_queue;
+
+    my @feeds = $model->resultset('Feed')->all;
+    foreach my $feed (@feeds) {
+        my $priority    = $feed->priority;
+        my $last_fetch  = $feed->fetches->first;
+
+        my $fetch_time = $last_fetch ? $last_fetch->fetch_date : 0;
+
+        my $next_fetch = next_fetch($priority, $fetch_time);
+        next unless DateTime->now->epoch > $next_fetch;
+
+        push @unordered_queue, {
+            feed        => $feed,
+            last_fetch  => $fetch_time,
+            next_fetch  => $next_fetch,
+        };
+    }
+
+    my @ordered_queue = sort { $a->{next_fetch} <=> $b->{next_fetch} } @unordered_queue;
+
+    return \@ordered_queue;
+}
+
+sub next_fetch {
+    my ($priority, $last_fetch) = @_;
+    return 0 unless $last_fetch;
+
+    my $fetch_interval = $FETCH_INTERVALS{$priority};
+    my $fetch_time = DateTime->from_epoch($last_fetch);
+    $fetch_time->add( minutes => $fetch_interval );
+    return $fetch_time->epoch;
 }
 
 sub pop_fetch_queue {
-
-}
-
-sub push_fetch_info {
-
+    my $queue = shift;
+    return shift @$queue;
 }

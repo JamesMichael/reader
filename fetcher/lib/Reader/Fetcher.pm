@@ -1,29 +1,21 @@
 package Reader::Fetcher;
 use warnings;
 use strict;
-
-use FindBin;
-use lib "$FindBin::Bin/../../model/lib";
+use lib "/opt/reader/lib";
 
 use Reader::Model;
 use LWP::UserAgent;
 use HTTP::Request::Common qw(GET);
 
 use Readonly;
-Readonly my $OUTPUT_DIR => "$FindBin::Bin/../var/reader/feeds/unparsed";
+Readonly my $OUTPUT_DIR => "/opt/reader/var/feeds/unparsed";
 
 sub fetch {
-    my ($feed_id) = @_;
+    my $feed = shift;
 
-    my $model = Reader::Model::model();
-    my $feed = $model->resultset('Feed')->find($feed_id);
-
-    unless ($feed) {
-        die 'Invalid item id';
-    }
-
-    my $uri = $feed->uri;
-    my $title = $feed->title;
+    my $feed_id = $feed->id;
+    my $uri     = $feed->uri;
+    my $title   = $feed->title;
 
     my $filename = "$OUTPUT_DIR/$feed_id.xml";
     print "downloading '$title' ($uri) to $filename\n";
@@ -36,8 +28,10 @@ sub fetch {
 
     if ($result->is_success) {
         print "Successfully downloaded\n";
+        return 1;
     } else {
         print "Failed: " . $result->status_line, "\n";
+        return 0;
     }
 };
 
