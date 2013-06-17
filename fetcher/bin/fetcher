@@ -40,6 +40,11 @@ while ($iteration_count--) {
         });
     } else {
         print "[ERROR] error fetching $feed_id \n";
+        $fetch->{feed}->create_related('fetches', {
+            fetch_date  => DateTime->now->epoch,
+            filename    => '',
+            status      => 'error',
+        });
     }
 }
 
