@@ -4,5 +4,6 @@ CREATE TABLE feed (
     title TEXT NOT NULL,
     link TEXT NOT NULL,
     description TEXT NOT NULL,
-    author TEXT NOT NULL
+    author TEXT NOT NULL,
+    priority TEXT DEFAULT 'normal'
 );
