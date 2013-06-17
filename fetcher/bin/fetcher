@@ -69,7 +69,7 @@ sub next_fetch {
     return 0 unless $last_fetch;
 
     my $fetch_interval = $FETCH_INTERVALS{$priority};
-    my $fetch_time = DateTime->from_epoch($last_fetch);
+    my $fetch_time = DateTime->from_epoch(epoch => $last_fetch);
     $fetch_time->add( minutes => $fetch_interval );
     return $fetch_time->epoch;
 }
