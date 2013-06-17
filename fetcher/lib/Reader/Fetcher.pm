@@ -10,6 +10,8 @@ use HTTP::Request::Common qw(GET);
 use Readonly;
 Readonly my $OUTPUT_DIR => "/opt/reader/var/feeds/unparsed";
 
+$ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
+
 sub fetch {
     my $feed = shift;
 
