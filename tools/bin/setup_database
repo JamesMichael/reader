@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
-model_dir=${1-../model}
 
-rm -f $model_dir/reader.db
-cat $model_dir/db/* | sqlite3 $model_dir/reader.db
+DB_PATH="/vhosts/reader/db"
+DB_NAME="reader.db"
+
+model_dir=${1-../model/db}
+
+rm -f "$DB_PATH/$DB_NAME"
+
+cat $model_dir/* | sqlite3 "$DB_PATH/$DB_NAME"
 
 < subscriptions.xml bin/greader_import
