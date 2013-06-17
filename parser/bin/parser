@@ -8,6 +8,9 @@ use Reader::Model;
 
 use Readonly;
 Readonly my $MAX_ITERATIONS => 10;
+Readonly my $UNPARSED_DIR   => "/opt/reader/var/feeds/unparsed";
+Readonly my $PARSED_DIR     => "/opt/reader/var/feeds/parsed";
+Readonly my $ERROR_DIR      => "/opt/reader/var/feeds/error";
 
 my $model = Reader::Model::model;
 
@@ -21,23 +24,56 @@ while ($iteration_count--) {
     }
 
     # parse item
+    my $filename = $UNPARSED_DIR . '/' . $fetch->filename;
+    unless (-f $filename) {
+        print "[ERROR] $filename does not exist\n";
+        next;
+    }
+
     my ($result, $header, $items) = Reader::Parser::parse($filename);
 
     unless ($result) {
         print "[ERROR] Could not parse feed: $filename\n";
+        $fetch->status('error');
+        $fetch->update;
         next;
     }
 
     my $feed = $model->resultset('Feed')->find($fetch->feed_id);
+    unless ($feed) {
+        print '[ERROR] Invalid feed ', $fetch->feed_id, "\n";
+        $fetch->status('error');
+        $fetch->update;
+        next;
+    }
 
     $result = update_feed($feed, $header);
     foreach my $item (@$items) {
         $result = update_item($model, $feed, $item);
     }
+
+    $fetch->status('parsed');
+    $fetch->update;
 }
 
 sub get_next_fetch {
+    my $model = shift;
 
+    my $fetch = $model->resultset('Fetch')->search(
+        {
+            status  => 'fetched',
+        },
+        {
+            order_by => { -desc => 'fetch_date' },
+        }
+    )->first;
+
+    return unless $fetch;
+
+    $fetch->status('parsing');
+    $fetch->update;
+
+    return $fetch;
 }
 
 sub update_feed {
