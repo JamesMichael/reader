@@ -11,3 +11,6 @@ rm -f "$DB_PATH/$DB_NAME"
 cat $model_dir/* | sqlite3 "$DB_PATH/$DB_NAME"
 
 < subscriptions.xml bin/greader_import
+
+sqlite3 "$DB_PATH/$DB_NAME" <<<"INSERT INTO state (state) VALUES ('unread');"
+sqlite3 "$DB_PATH/$DB_NAME" <<<"INSERT INTO state (state) VALUES ('read');"
