@@ -6,6 +6,8 @@ use lib '/opt/reader/lib';
 use Reader::Parser;
 use Reader::Model;
 
+use File::Copy;
+
 use Readonly;
 Readonly my $MAX_ITERATIONS => 10;
 Readonly my $UNPARSED_DIR   => "/opt/reader/var/feeds/unparsed";
@@ -36,6 +38,7 @@ while ($iteration_count--) {
         print "[ERROR] Could not parse feed: $filename\n";
         $fetch->status('error');
         $fetch->update;
+        move_feed_to_error($filename);
         next;
     }
 
@@ -44,6 +47,7 @@ while ($iteration_count--) {
         print '[ERROR] Invalid feed ', $fetch->feed_id, "\n";
         $fetch->status('error');
         $fetch->update;
+        move_feed_to_error($filename);
         next;
     }
 
@@ -54,6 +58,7 @@ while ($iteration_count--) {
 
     $fetch->status('parsed');
     $fetch->update;
+    move_feed_to_parsed($filename);
 }
 
 sub get_next_fetch {
@@ -101,6 +106,7 @@ sub update_item {
 
     # check if item already exists
     my $unique_id = $data->{guid} || @{$data->{links}}[0];
+
     my $item = $model->resultset('Item')->search(
         {
             -and => [
@@ -149,4 +155,22 @@ sub update_item {
     }
 
     return $item;
+}
+
+sub move_feed_to_error {
+    my $filename = shift;
+
+    my $original_path   = $UNPARSED_DIR . '/' . $filename;
+    my $error_path      = $ERROR_DIR    . '/' . $filename;
+
+    move($original_path, $error_path);
+}
+
+sub move_feed_to_parsed {
+    my $filename = shift;
+
+    my $original_path   = $UNPARSED_DIR . '/' . $filename;
+    my $parsed_path     = $PARSED_DIR   . '/' . $filename;
+
+    move($original_path, $parsed_path);
 }
