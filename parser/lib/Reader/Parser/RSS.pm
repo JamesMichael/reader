@@ -6,14 +6,13 @@ sub parse_header {
     my ($class, $xpath) = @_;
 
     # get all header <link>s
-    my $link_nodeset = $xpath->find('/rss/link');
-    my @links = map { $_->string_value } $link_nodeset->get_nodelist;
+    my @links = map { $_->textContent } $xpath->findnodes('/rss/channel[1]/link');
 
     return {
         format      => 'rss',
-        title       => $xpath->getNodeText('/rss/channel[1]/title')->value,
-        description => $xpath->getNodeText('/rss/channel[1]/description')->value,
-        updated     => $xpath->getNodeText('/rss/channel[1]/pubDate')->value,
+        title       => $xpath->findvalue('/rss/channel[1]/title'),
+        description => $xpath->findvalue('/rss/channel[1]/description'),
+        updated     => $xpath->findvalue('/rss/channel[1]/pubDate'),
         links       => \@links,
         authors     => [],
     };
@@ -23,25 +22,24 @@ sub parse_items {
     my ($class, $xpath) = @_;
 
     my @items;
-    my $item_nodeset = $xpath->find('/rss/channel[1]/item');
-    foreach my $item_context ($item_nodeset->get_nodelist) {
-        push @items, parse_item($xpath, $item_context);
+    my @item_nodes = $xpath->findnodes('/rss/channel[1]/item');
+    foreach my $item_node (@item_nodes) {
+        push @items, parse_item($xpath, $item_node);
     }
 
     return \@items;
 }
 
 sub parse_item {
-    my ($xpath, $context) = @_;
+    my ($xpath, $node) = @_;
 
-    my $link_nodeset = $xpath->find('./link', $context);
-    my @links = map { $_->string_value } $link_nodeset->get_nodelist;
+    my @links = map { $_->textContent } $node->findnodes('./link');
 
     return {
-        guid        => $xpath->find('./guid', $context)->string_value,
-        title       => $xpath->find('./title', $context)->string_value,
-        published   => $xpath->find('./pubDate', $context)->string_value,
-        summary     => $xpath->find('./description', $context)->string_value,
+        guid        => $node->findvalue('./guid'),
+        title       => $node->findvalue('./title'),
+        published   => $node->findvalue('./pubDate'),
+        summary     => $node->findvalue('./description'),
         links       => \@links,
     };
 }
