@@ -13,13 +13,13 @@ Readonly my $OUTPUT_DIR => "/opt/reader/var/feeds/unparsed";
 $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
 
 sub fetch {
-    my $feed = shift;
+    my ($feed, $fetch_tag) = @_;
 
     my $feed_id = $feed->id;
     my $uri     = $feed->uri;
     my $title   = $feed->title;
 
-    my $filename = "$OUTPUT_DIR/$feed_id.xml";
+    my $filename = "$OUTPUT_DIR/$feed_id.$fetch_tag.xml";
     print "downloading '$title' ($uri) to $filename\n";
 
     my $ua = LWP::UserAgent->new;

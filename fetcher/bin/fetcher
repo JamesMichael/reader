@@ -22,6 +22,8 @@ Readonly my %FETCH_INTERVALS => (
 my $model = Reader::Model::model;
 my $queue = build_fetch_queue($model);
 
+my $fetch_tag = calculate_fetch_tag();
+
 my $iteration_count = $MAX_ITERATIONS;
 while ($iteration_count--) {
     my $fetch = pop_fetch_queue($queue);
@@ -29,13 +31,13 @@ while ($iteration_count--) {
 
     my $feed_id = $fetch->{feed}->id;
     print "Processing $feed_id\n";
-    my $result = Reader::Fetcher::fetch($fetch->{feed});
+    my $result = Reader::Fetcher::fetch($fetch->{feed}, $fetch_tag);
 
     if ($result) {
         print "[INFO] successfully fetched $feed_id\n";
         $fetch->{feed}->create_related('fetches', {
             fetch_date  => DateTime->now->epoch,
-            filename    => "$feed_id.xml",
+            filename    => "$feed_id.$fetch_tag.xml",
             status      => 'fetched',
         });
     } else {
@@ -50,6 +52,12 @@ while ($iteration_count--) {
 
 $iteration_count = $MAX_ITERATIONS - $iteration_count;
 print "[INFO] finished: ran $iteration_count / $MAX_ITERATIONS iterations\n";
+
+# YYYY_MM_DD_HH_MM when script started
+sub calculate_fetch_tag {
+    my (undef, $min, $hour, $day, $mon, $year) = localtime(time);
+    return join '_', $year + 1900, map { sprintf "%02d", $_ } $mon, $day, $hour, $min;
+}
 
 sub build_fetch_queue {
     my $model = shift;
