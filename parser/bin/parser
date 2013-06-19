@@ -41,7 +41,7 @@ while ($iteration_count--) {
         print "[ERROR] Could not parse feed: $filename\n";
         $fetch->status('error');
         $fetch->update;
-        move_feed_to_error($filename);
+        move_feed_to_error($fetch->filename);
         $unsuccessful_parses++;
         next;
     }
@@ -51,7 +51,7 @@ while ($iteration_count--) {
         print '[ERROR] Invalid feed ', $fetch->feed_id, "\n";
         $fetch->status('error');
         $fetch->update;
-        move_feed_to_error($filename);
+        move_feed_to_error($fetch->filename);
         $unsuccessful_parses++;
         next;
     }
@@ -63,7 +63,7 @@ while ($iteration_count--) {
 
     $fetch->status('parsed');
     $fetch->update;
-    move_feed_to_parsed($filename);
+    move_feed_to_parsed($fetch->filename);
     $successful_parses++;
 }
 
