@@ -172,7 +172,8 @@ sub move_feed_to_error {
     my $original_path   = $UNPARSED_DIR . '/' . $filename;
     my $error_path      = $ERROR_DIR    . '/' . $filename;
 
-    move($original_path, $error_path);
+    my $success = move($original_path, $error_path);
+    print "Failed to move feed to error directory: $!\n" unless $success;
 }
 
 sub move_feed_to_parsed {
@@ -181,5 +182,6 @@ sub move_feed_to_parsed {
     my $original_path   = $UNPARSED_DIR . '/' . $filename;
     my $parsed_path     = $PARSED_DIR   . '/' . $filename;
 
-    move($original_path, $parsed_path);
+    my $success = move($original_path, $parsed_path);
+    print "Failed to move feed to error directory: $!\n" unless $success;
 }
