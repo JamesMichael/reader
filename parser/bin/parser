@@ -16,6 +16,8 @@ Readonly my $ERROR_DIR      => "/opt/reader/var/feeds/error";
 
 my $model = Reader::Model::model;
 
+my ($successful_parses, $unsuccessful_parses) = (0) x 2;
+
 my $iteration_count = $MAX_ITERATIONS;
 while ($iteration_count--) {
 
@@ -29,6 +31,7 @@ while ($iteration_count--) {
     my $filename = $UNPARSED_DIR . '/' . $fetch->filename;
     unless (-f $filename) {
         print "[ERROR] $filename does not exist\n";
+        $unsuccessful_parses++;
         next;
     }
 
@@ -39,6 +42,7 @@ while ($iteration_count--) {
         $fetch->status('error');
         $fetch->update;
         move_feed_to_error($filename);
+        $unsuccessful_parses++;
         next;
     }
 
@@ -48,6 +52,7 @@ while ($iteration_count--) {
         $fetch->status('error');
         $fetch->update;
         move_feed_to_error($filename);
+        $unsuccessful_parses++;
         next;
     }
 
@@ -59,7 +64,11 @@ while ($iteration_count--) {
     $fetch->status('parsed');
     $fetch->update;
     move_feed_to_parsed($filename);
+    $successful_parses++;
 }
+
+$iteration_count = $successful_parses + $unsuccessful_parses;
+print "[INFO] finished: ran $iteration_count / $MAX_ITERATIONS iterations ($successful_parses succeeded)\n";
 
 sub get_next_fetch {
     my $model = shift;
