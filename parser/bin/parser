@@ -78,7 +78,7 @@ sub get_next_fetch {
             status  => 'fetched',
         },
         {
-            order_by => { -desc => 'fetch_date' },
+            order_by => { -asc => 'fetch_date' },
         }
     )->first;
 
