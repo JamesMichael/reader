@@ -9,15 +9,6 @@
         cd model
         sqlite3 reader.db < db/*
 
-## Testing API
-
-1. Get Feeds
-
-        curl -i localhost:11122/feeds
-
-2. Add Feed
-
-        curl -i localhost:11122/feeds/new --data-urlencode 'uri=http://example.com/rss.xml'
 
 ## API
 
@@ -44,3 +35,17 @@
 ### Running
 
     /opt/reader/bin/api_server --port <PORT>
+
+### Testing
+
+The api responds to HTTP requests, and can be tested using curl
+
+#### Examples
+
+1. Get Feeds
+
+        curl -i localhost:11122/feeds
+
+2. Add Feed
+
+        curl -i localhost:11122/feeds/new --data-urlencode 'uri=http://example.com/rss.xml'
