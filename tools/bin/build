@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # USAGE: build abc.spec
-# tarballs current directory copies to 
 
 # RPMBUILD settings
 RPMBUILD_DIR="${HOME}/rpmbuild"
