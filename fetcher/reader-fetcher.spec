@@ -15,6 +15,8 @@ Requires:	perl(HTTP::Request::Common)
 Requires:	perl(LWP::UserAgent)
 Requires:	perl(Readonly)
 
+Requires:	reader-tools
+
 %description
 Fetches RSS feeds
 
