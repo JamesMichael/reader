@@ -20,7 +20,6 @@ sub fetch {
     my $title   = $feed->title;
 
     my $filename = "$OUTPUT_DIR/$feed_id.$fetch_tag.xml";
-    print "downloading '$title' ($uri) to $filename\n";
 
     my $ua = LWP::UserAgent->new;
     $ua->agent('Mozilla/8.0');

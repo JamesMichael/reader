@@ -32,7 +32,6 @@ while ($iteration_count--) {
     last unless $fetch;
 
     my $feed_id = $fetch->{feed}->id;
-    print "Processing $feed_id\n";
     my ($result, $message) = Reader::Fetcher::fetch($fetch->{feed}, $fetch_tag);
 
     if ($result) {
