@@ -50,7 +50,7 @@ rm -rf %{buildroot}
 
 
 %files
-%defattr(-,root,root,-)
+%defattr(-,reader,reader,-)
 
 /opt/reader/bin/fetcher
 /opt/reader/lib/Reader/Fetcher.pm
