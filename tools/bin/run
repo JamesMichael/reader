@@ -15,6 +15,7 @@ croak '--name is a required option' unless $process_name;
 
 Readonly my $PID_FILE => "/opt/reader/var/run/reader-$process_name.pid";
 Readonly my $COMMAND  => "/opt/reader/bin/$process_name";
+Readonly my $LOG_FILE => "/opt/reader/var/log/reader-$process_name.log";
 
 my $pid_file = File::Pid->new({
     file => $PID_FILE,
@@ -23,7 +24,7 @@ exit if $pid_file->running;
 
 $pid_file->write;
 
-system $COMMAND;
+system qq{$COMMAND 2>&1 | while read line; do echo "[\$(date)] \$line"; done >> $LOG_FILE};
 
 $pid_file->remove;
 exit;
