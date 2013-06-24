@@ -30,17 +30,12 @@ sub fetch {
     );
 
     if ($result->is_success) {
-        print "Successfully downloaded\n";
-
         open my $outfh, '>', $filename or croak $!;
         print $outfh $result->decoded_content(charset => 'none');
         close $outfh;
-
-        return 1;
-    } else {
-        print "Failed: " . $result->status_line, "\n";
-        return 0;
     }
+
+    return ($result->is_success, $result->status_line);
 };
 
 1;

@@ -33,7 +33,7 @@ while ($iteration_count--) {
 
     my $feed_id = $fetch->{feed}->id;
     print "Processing $feed_id\n";
-    my $result = Reader::Fetcher::fetch($fetch->{feed}, $fetch_tag);
+    my ($result, $message) = Reader::Fetcher::fetch($fetch->{feed}, $fetch_tag);
 
     if ($result) {
         print "[INFO] successfully fetched $feed_id\n";
@@ -49,6 +49,7 @@ while ($iteration_count--) {
             fetch_date  => DateTime->now->epoch,
             filename    => '',
             status      => 'error',
+            message     => $message,
         });
         $unsuccessful_fetches++;
     }
