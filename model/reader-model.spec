@@ -44,6 +44,7 @@ rm -rf %{buildroot}
 
 /opt/reader/lib/Reader/Model.pm
 /opt/reader/lib/Reader/Model/Result/Feed.pm
+/opt/reader/lib/Reader/Model/Result/Fetch.pm
 /opt/reader/lib/Reader/Model/Result/Item.pm
 /opt/reader/lib/Reader/Model/Result/State.pm
 
