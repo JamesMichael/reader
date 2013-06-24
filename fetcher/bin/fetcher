@@ -69,6 +69,7 @@ sub build_fetch_queue {
 
     my @feeds = $model->resultset('Feed')->all;
     foreach my $feed (@feeds) {
+        next if $feed->paused;
         my $priority    = $feed->priority;
         my $last_fetch  = $feed->fetches->first;
 
