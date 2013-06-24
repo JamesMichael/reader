@@ -12,6 +12,7 @@ BuildArch:	noarch
 
 Requires:	perl(File::Pid)
 Requires:	perl(Readonly)
+Requires:	perl(XML::XPath)
 
 %description
 Misc. tools
