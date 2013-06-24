@@ -5,5 +5,6 @@ CREATE TABLE feed (
     link TEXT NOT NULL,
     description TEXT NOT NULL,
     author TEXT NOT NULL,
-    priority TEXT DEFAULT 'normal'
+    priority TEXT DEFAULT 'normal',
+    paused INTEGER NOT NULL DEFAULT 0
 );
