@@ -16,6 +16,9 @@ croak '--name is a required option' unless $process_name;
 Readonly my $PID_FILE   => "/opt/reader/var/run/$process_name.pid";
 Readonly my $COMMAND    => "/opt/reader/bin/$process_name";
 Readonly my $LOG_FILE   => "/opt/reader/var/log/$process_name.log";
+Readonly my $PAUSE_FILE => "/opt/reader/var/$process_name.pause";
+
+exit if -f $PAUSE_FILE;
 
 my $pid_file = File::Pid->new({
     file => $PID_FILE,
