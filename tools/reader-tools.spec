@@ -1,5 +1,5 @@
 Name:		reader-tools
-Version:	0.1
+Version:	0.2
 Release:	1%{?dist}
 Summary:	Reader Tools
 
@@ -13,6 +13,8 @@ BuildArch:	noarch
 Requires:	perl(File::Pid)
 Requires:	perl(Readonly)
 Requires:	perl(XML::XPath)
+Requires:	perl(Term::ReadKey)
+Requires:	perl(File::Slurp)
 
 %description
 Misc. tools
@@ -42,10 +44,14 @@ rm -rf %{buildroot}
 
 /opt/reader/bin/build
 /opt/reader/bin/greader_import
+/opt/reader/bin/htpasswd_gen
 /opt/reader/bin/run
 /opt/reader/bin/setup_database
 
 
 %changelog
+* Wed Jul 26 2013 <James Michael> - 0.2-1
+- Add script to generate htpasswd files
+
 * Mon Jul 24 2013 <James Michael> - 0.1-1
 - Initial tools package
