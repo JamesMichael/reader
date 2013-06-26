@@ -4,16 +4,48 @@ use strict;
 use lib '/opt/reader/lib';
 
 use Getopt::Long;
+use Readonly;
+use File::Pid;
+use Proc::Daemon;
+
 use Reader::API;
 use Reader::API::Server;
 
+Readonly my $LOG_FILE => '/opt/reader/var/log/apid.log';
+Readonly my $PID_FILE => '/opt/reader/var/run/apid.pid';
+
+# read options
 my $port;
 GetOptions(
     'p|port=i'  => \$port,
 ) or die 'Invalid options';
-
 $port ||= 11122;
 
+# only one api server can run at a time
+my $pid_file = File::Pid->new({
+    file => $PID_FILE,
+});
+exit if $pid_file->running;
+
+# disassociate self
+daemonize();
+
+# run server
 Reader::API::Server->new(
     port => $port,
 )->run;
+
+sub daemonize {
+
+    eval {
+        Proc::Daemon::Init({
+            child_STDOUT => $LOG_FILE,
+            child_STDERR => $LOG_FILE,
+        });
+    };
+
+    if ($@) {
+        die $@;
+    }
+
+}

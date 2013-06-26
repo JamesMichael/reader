@@ -16,6 +16,7 @@ Requires:	perl(Moose)
 Requires:	perl(Readonly)
 Requires:	perl(DBIx::Class)
 Requires:	perl(HTTP::Message)
+Requires: 	perl(Proc::Daemon)
 
 Requires:	reader-model
 
