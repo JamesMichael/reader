@@ -1,6 +1,6 @@
 Name:		reader-api
-Version:	0.1
-Release:	2%{?dist}
+Version:	0.2
+Release:	1%{?dist}
 Summary:	Reader API server
 
 Group:		Applications/Internet
@@ -60,7 +60,11 @@ rm -rf %{buildroot}
 /opt/reader/lib/Reader/API/Router.pm
 /opt/reader/lib/Reader/API/Server.pm
 
+%attr(-,root,root) /etc/rc.d/init.d/apid
 
 %changelog
+* Wed Jul 26 2013 <James Michael> - 0.2-1
+- Add init script and daemonise server
+
 * Fri Jul 14 2013 <James Michael> - 0.1-2
 - Initial api package
