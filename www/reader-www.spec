@@ -1,5 +1,5 @@
 Name:		reader-www
-Version:	0.1
+Version:	0.2
 Release:	1%{?dist}
 Summary:	Reader Web server files
 
@@ -46,5 +46,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Jul 26 2013 <James Michael> - 0.2-1
+- Use HTTP basic authentication
+
 * Fri Jul 14 2013 <James Michael> - 0.1-1
 - Initial www package
