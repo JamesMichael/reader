@@ -1,6 +1,6 @@
 Name:		reader-api
 Version:	0.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Reader API server
 
 Group:		Applications/Internet
@@ -38,12 +38,14 @@ rm -rf %{buildroot}
 install -m 0755 -d %{buildroot}/opt/reader/bin/
 install -m 0755 bin/* %{buildroot}/opt/reader/bin
 
+install -m 0755 -d %{buildroot}/etc/rc.d/init.d/
+install -m 0644 etc/apid %{buildroot}/etc/rc.d/init.d/apid
+
 find lib -type d -print0 \
     | xargs -0 -I@ install -m 0755 -d %{buildroot}/opt/reader/@
 
 find lib -type f -name '*.pm' -print0 \
     | xargs -0 -I@ install -m 0644 @ %{buildroot}/opt/reader/@
-
 
 %clean
 rm -rf %{buildroot}
@@ -63,7 +65,7 @@ rm -rf %{buildroot}
 %attr(-,root,root) /etc/rc.d/init.d/apid
 
 %changelog
-* Wed Jul 26 2013 <James Michael> - 0.2-1
+* Wed Jul 26 2013 <James Michael> - 0.2-2
 - Add init script and daemonise server
 
 * Fri Jul 14 2013 <James Michael> - 0.1-2
