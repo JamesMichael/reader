@@ -30,8 +30,11 @@ rm -rf %{buildroot}
 install -m 0755 -d %{buildroot}/vhosts/reader/etc/
 install -m 0644 etc/* %{buildroot}/vhosts/reader/etc/
 
-install -m 0755 -d %{buildroot}/vhosts/reader/htdocs/
-install -m 0644 htdocs/* %{buildroot}/vhosts/reader/htdocs/
+find htdocs -type d -print 0 \
+    | xargs -0 -I@ install -m 0755 -d %{buildroot}/vhosts/reader/@
+
+find htdocs -type f -print 0 \
+    | xargs -0 -I@ install -m 0644 @ %{buildroot}/vhosts/reader/@
 
 
 %clean
@@ -42,7 +45,9 @@ rm -rf %{buildroot}
 %defattr(-,nginx,nginx,-)
 
 %attr(-,root,root) /vhosts/reader/etc/reader.conf
+
 /vhosts/reader/htdocs/index.html
+/vhosts/reader/htdocs/scripts/api.js
 
 
 %changelog
