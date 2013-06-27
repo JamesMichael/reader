@@ -1,5 +1,5 @@
 Name:		reader-tools
-Version:	0.2
+Version:	0.3
 Release:	1%{?dist}
 Summary:	Reader Tools
 
@@ -34,6 +34,11 @@ rm -rf %{buildroot}
 install -m 0755 -d %{buildroot}/opt/reader/bin/
 install -m 0755 bin/* %{buildroot}/opt/reader/bin
 
+# misc directories required by various scripts
+install -m 0755 -d %{buildroot}/opt/reader/var/lock
+install -m 0755 -d %{buildroot}/opt/reader/var/log
+install -m 0755 -d %{buildroot}/opt/reader/var/run
+
 
 %clean
 rm -rf %{buildroot}
@@ -48,8 +53,15 @@ rm -rf %{buildroot}
 /opt/reader/bin/run
 /opt/reader/bin/setup_database
 
+/opt/reader/var/lock
+/opt/reader/var/log
+/opt/reader/var/run
+
 
 %changelog
+* Thu Jul 27 2013 <James Michael> - 0.3-1
+- Build /opt/reader/var directories
+
 * Wed Jul 26 2013 <James Michael> - 0.2-1
 - Add script to generate htpasswd files
 
