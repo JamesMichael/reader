@@ -28,7 +28,13 @@ my $pid_file = File::Pid->new({
 exit if $pid_file->running;
 
 # disassociate self
-daemonize();
+exit if daemonize();
+
+# only the daemonised child process from now on
+# setup log handling
+open my $log_fh, '>>', $LOG_FILE or die "Couldn't open '$LOG_FILE': $!";
+*STDOUT = $log_fh;
+*STDERR = $log_fh;
 
 # run server
 Reader::API::Server->new(
@@ -36,16 +42,12 @@ Reader::API::Server->new(
 )->run;
 
 sub daemonize {
-
-    eval {
-        Proc::Daemon::Init({
-            child_STDOUT => $LOG_FILE,
-            child_STDERR => $LOG_FILE,
-        });
-    };
+    my $pid;
+    eval { $pid = Proc::Daemon::Init() };
 
     if ($@) {
         die $@;
     }
 
+    return $pid;
 }
