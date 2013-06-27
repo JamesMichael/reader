@@ -39,7 +39,7 @@ install -m 0755 -d %{buildroot}/opt/reader/bin/
 install -m 0755 bin/* %{buildroot}/opt/reader/bin
 
 install -m 0755 -d %{buildroot}/etc/rc.d/init.d/
-install -m 0644 etc/apid %{buildroot}/etc/rc.d/init.d/apid
+install -m 0755 etc/apid %{buildroot}/etc/rc.d/init.d/apid
 
 find lib -type d -print0 \
     | xargs -0 -I@ install -m 0755 -d %{buildroot}/opt/reader/@
