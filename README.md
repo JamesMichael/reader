@@ -39,12 +39,21 @@
 
 ### Building
 
-    cd api
-    ../tools/bin/build
+    ( cd api && /opt/reader/bin/build )
 
-### Running
+The built reader-api package can then be found in `~/rpmbuild/RPMS/noarch/`.
 
-    /opt/reader/bin/api_server --port <PORT>
+### Starting the service
+
+    sudo -i service apid start
+
+### Stopping the service
+
+    sudo -i service apid stop
+
+### Running the server manually
+
+    /opt/reader/bin/api_server [--port <PORT>]
 
 ### Testing
 
