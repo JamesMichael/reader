@@ -2,7 +2,7 @@ package Reader::Model;
 use base qw(DBIx::Class::Schema);
 
 use Readonly;
-Readonly my $DATABASE_FILE => "/vhosts/reader/db/reader.db";
+Readonly my $DATABASE_FILE => "/opt/reader/db/reader.db";
 
 sub model {
     my $model = Reader::Model->connect(
