@@ -1,9 +1,7 @@
 #!/usr/bin/env perl
 use warnings;
 use strict;
-
-use FindBin;
-use lib "$FindBin::Bin/../../model/lib";
+use lib '/opt/reader/lib';
 
 use Getopt::Long;
 use XML::XPath;
