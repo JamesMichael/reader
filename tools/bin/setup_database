@@ -1,16 +1,36 @@
 #!/usr/bin/env bash
+# usage: setup_database [ subscriptions.xml ]
+# creates/replaces /opt/reader/db/reader.db
+# inserts feeds from subscriptions.xml (optional argument)
 
+SUBSCRIPTIONS_FILE=$1
 
-DB_PATH="/vhosts/reader/db"
+DB_PATH="/opt/reader/db"
 DB_NAME="reader.db"
 
-model_dir=${1-../model/db}
+# delete existing database after user confirmation
+if [ -e "$DB_PATH/$DB_NAME" ]
+then
+    echo "$DB_PATH/$DB_NAME already exists"
+    echo "By continuing this file will be removed"
+    echo "Do you want to proceed? (y/n)"
 
-rm -f "$DB_PATH/$DB_NAME"
+    read response
+    if [ ${response:0:1} != "y" ]
+    then
+        exit 1
+    fi
 
-cat $model_dir/* | sqlite3 "$DB_PATH/$DB_NAME"
+    rm -f "$DB_PATH/$DB_NAME"
+fi
 
-< subscriptions.xml bin/greader_import
+# generate new tables
+cat "$DB_PATH/"*.sql | sqlite3 "$DB_PATH/$DB_NAME"
 
-sqlite3 "$DB_PATH/$DB_NAME" <<<"INSERT INTO state (state) VALUES ('unread');"
-sqlite3 "$DB_PATH/$DB_NAME" <<<"INSERT INTO state (state) VALUES ('read');"
+if [ ! -e "$SUBSCRIPTIONS_FILE" ]
+then
+    exit
+fi
+
+# load google reader subscriptions file
+< "$SUBSCRIPTIONS_FILE" /opt/reader/bin/greader_import --verbose
