@@ -1,14 +1,24 @@
 # RSS Reader
 
-## Setting up
+## Database
 
-### Database
+* The database used by reader is a sqlite database
 
-1. Initialise database structures
+* This database is located at `/opt/reader/db/reader.db`.
 
-        cd model
-        sqlite3 reader.db < db/*
+* The schema files are `/opt/reader/db/*.sql`
 
+* Database interaction is performed using the `DBIx::Class` obects found in the `reader-model` package
+
+### Setting up
+
+1. install `reader-tools` package
+
+2. install `reader-model` package
+
+3. run setup database script, with optional subscriptions file
+
+        /opt/reader/bin/setup_database /path/to/subscriptions.xml
 
 ## API
 
