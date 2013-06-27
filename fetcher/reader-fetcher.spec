@@ -44,6 +44,11 @@ find lib -type f -name '*.pm' -print0 \
 install -m 0755 -d %{buildroot}/etc/cron.d
 install -m 0644 etc/crontab %{buildroot}/etc/cron.d/fetcher
 
+# directories for holding fetched feeds
+install -m 0755 -d %{buildroot}/opt/reader/var/feeds/error
+install -m 0755 -d %{buildroot}/opt/reader/var/feeds/parsed
+install -m 0755 -d %{buildroot}/opt/reader/var/feeds/unparsed
+
 
 %clean
 rm -rf %{buildroot}
@@ -56,6 +61,10 @@ rm -rf %{buildroot}
 /opt/reader/lib/Reader/Fetcher.pm
 
 /etc/cron.d/fetcher
+
+/opt/reader/var/feeds/error
+/opt/reader/var/feeds/parsed
+/opt/reader/var/feeds/unparsed
 
 
 %changelog
