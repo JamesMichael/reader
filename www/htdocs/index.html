@@ -4,8 +4,23 @@
     <title>RSS Reader</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="scripts/api.js"></script>
+	<script>
+
+	$(document).ready(function() {
+		var container = $('#item_container');
+
+		$.when(API.get_next_unread_items()).then(function(data) {
+			data.items.forEach(function(item) {
+				container.append('<li>' + item.title + '</li>');
+			});
+		});
+	});
+
+	</script>
 </head>
 <body>
     <h1>RSS Reader</h1>
+
+	<ul id="item_container"><ul>
 </body>
 </html>
