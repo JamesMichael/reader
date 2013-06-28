@@ -30,10 +30,10 @@ rm -rf %{buildroot}
 install -m 0755 -d %{buildroot}/vhosts/reader/etc/
 install -m 0644 etc/* %{buildroot}/vhosts/reader/etc/
 
-find htdocs -type d -print 0 \
+find htdocs -type d -print0 \
     | xargs -0 -I@ install -m 0755 -d %{buildroot}/vhosts/reader/@
 
-find htdocs -type f -print 0 \
+find htdocs -type f -print0 \
     | xargs -0 -I@ install -m 0644 @ %{buildroot}/vhosts/reader/@
 
 
