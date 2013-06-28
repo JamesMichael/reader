@@ -42,7 +42,7 @@ find lib -type f -name '*.pm' -print0 \
     | xargs -0 -I@ install -m 0644 @ %{buildroot}/opt/reader/@
 
 install -m 0755 -d %{buildroot}/etc/cron.d
-install -m 0755 etc/crontab %{buildroot}/etc/cron.d/fetcher
+install -m 0644 etc/crontab %{buildroot}/etc/cron.d/fetcher
 
 # directories for holding fetched feeds
 install -m 0755 -d %{buildroot}/opt/reader/var/feeds/error

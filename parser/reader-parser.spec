@@ -37,7 +37,7 @@ find lib -type f -name '*.pm' -print0 \
     | xargs -0 -I@ install -m 0644 @ %{buildroot}/opt/reader/@
 
 install -m 0755 -d %{buildroot}/etc/cron.d
-install -m 0755 etc/crontab %{buildroot}/etc/cron.d/parser
+install -m 0644 etc/crontab %{buildroot}/etc/cron.d/parser
 
 
 %clean
