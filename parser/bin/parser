@@ -7,6 +7,7 @@ use Reader::Parser;
 use Reader::Model;
 
 use File::Copy;
+use Date::Parse;
 
 use Readonly;
 Readonly my $MAX_ITERATIONS => 10;
@@ -145,6 +146,9 @@ sub update_item {
                 'me.state' => 'unread',
         })->single;
 
+        # convert stringy date to unix timestamp
+        my $original_publish_date = str2time( $data->{published} );
+
         $item = $model->resultset('Item')->create({
             feed_id     => $feed->id,
             state_id    => $state->id,
@@ -152,7 +156,7 @@ sub update_item {
             title       => $data->{title},
             link        => join(', ', @{$data->{links}}),
             content     => $data->{summary},
-            published   => $data->{published},
+            published   => $original_publish_date,
         });
 
         if ($item) {
