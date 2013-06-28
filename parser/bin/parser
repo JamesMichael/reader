@@ -130,7 +130,6 @@ sub update_item {
         $item->title($data->{title});
         $item->link(join ', ', @{$data->{links}});
         $item->content($data->{summary});
-        $item->published($data->{published});
 
         if ($item->is_changed) {
             my %columns = $item->get_dirty_columns;
