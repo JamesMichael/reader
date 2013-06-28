@@ -1,10 +1,9 @@
 var API = (function($) {
     var api = {};
     var base_url = '/api/';
-    var format   = 'json';
     
     function get(path, callback) { 
-        var full_url = base_url + path + '.' + format;
+        var full_url = base_url + path;
    
         $.ajax({
             url: full_url,
@@ -21,5 +20,18 @@ var API = (function($) {
         });
     };
     
+    api.get_next_unread_items = function(last_unread_item_id) {
+        var request = 'list/unread';
+        if (last_unread_item_id !== undefined) {
+            request += '/' + last_unread_item_id;
+        }
+
+        get(request, function(items) {
+            $.each(items.items, function(index, item) {
+                console.log(item.title);
+            });
+        });
+    };
+
     return api;
 }($));
