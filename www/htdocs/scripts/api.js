@@ -4,20 +4,13 @@ var API = (function($) {
     
     function get(path, callback) { 
         var full_url = base_url + path;
-   
-        $.ajax({
+        return $.ajax({
             url: full_url,
-        }).done(function(data) {
-            callback(data); 
-        });
+        })
     }
     
     api.get_feeds = function() {
-        get('feeds', function(feeds) {
-            $.each(feeds.feeds, function(index, feed) {
-                console.log(feed.title);
-            });
-        });
+        return get('feeds');
     };
     
     api.get_next_unread_items = function(last_unread_item_id) {
@@ -26,11 +19,7 @@ var API = (function($) {
             request += '/' + last_unread_item_id;
         }
 
-        get(request, function(items) {
-            $.each(items.items, function(index, item) {
-                console.log(item.title);
-            });
-        });
+        return get(request);
     };
 
     return api;
