@@ -1,2 +1,2 @@
 # run feed parser every five minutes
-*/5+2 * * * * /opt/reader/bin/run --name parser
+*/5+2 * * * * reader /opt/reader/bin/run --name parser

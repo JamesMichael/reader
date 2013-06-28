@@ -1,2 +1,2 @@
 # run feed fetcher every five minutes
-*/5 * * * * /opt/reader/bin/run --name fetcher
+*/5 * * * * reader /opt/reader/bin/run --name fetcher
