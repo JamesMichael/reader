@@ -6,5 +6,5 @@ CREATE TABLE item (
     title TEXT NOT NULL,
     link TEXT NOT NULL,
     content TEXT NOT NULL,
-    published TEXT INTEGER
+    published INTEGER
 );
