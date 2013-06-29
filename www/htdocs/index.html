@@ -12,7 +12,7 @@
 		$.when(API.get_next_unread_items()).then(function(data) {
 			data.items.forEach(function(item) {
 				var content = format_item(item);
-				container.append(content);
+				container.appendChild(content);
 			});
 		});
 	});
