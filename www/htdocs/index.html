@@ -12,7 +12,7 @@
 		$.when(API.get_next_unread_items()).then(function(data) {
 			data.items.forEach(function(item) {
 				var content = format_item(item);
-				container.appendChild(content);
+				container.append(content);
 			});
 		});
 	});
@@ -34,6 +34,6 @@
 <body>
     <h1>RSS Reader</h1>
 
-	<ul id="item_container"><ul>
+	<ul id="item_container"></ul>
 </body>
 </html>
