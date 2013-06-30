@@ -102,8 +102,11 @@ var UI = (function($) {
 
 		$.when(API.get_next_unread_items()).then(function(data) {
 			data.items.forEach(function(item) {
-				var content = format_item(item);
+				var content = $(format_item(item));
 				container.append(content);
+				content.find('.item-title').on('click', function(event) {
+				    select_item_by_id(item.id);
+				});
 			});
 
 		    select_item(0);
