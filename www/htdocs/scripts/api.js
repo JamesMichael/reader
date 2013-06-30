@@ -36,5 +36,19 @@ var API = (function($) {
         return get(request);
     };
 
+    api.mark_read = function(item_id) {
+        var request = 'items/' + item_id;
+        var parameters = { 'mark-read': 'read' };
+
+        return post(request, parameters);
+    };
+
+    api.mark_unread = function(item_id) {
+        var request = 'items/' + item_id;
+        var parameters = { 'mark-read': 'unread' };
+
+        return post(request, parameters);
+    };
+
     return api;
 }($));
