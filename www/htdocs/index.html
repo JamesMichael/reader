@@ -5,30 +5,12 @@
 	<link rel="stylesheet" type="text/css" href="style/reader.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="scripts/api.js"></script>
+	<script src="scripts/ui.js"></script>
 	<script>
 
 	$(document).ready(function() {
-		var container = $('#item_container');
-
-		$.when(API.get_next_unread_items()).then(function(data) {
-			data.items.forEach(function(item) {
-				var content = format_item(item);
-				container.append(content);
-			});
-		});
+		UI.load_unread_items();
 	});
-
-	function format_item(item) {
-        var content = [
-             '<li id="' + item.id + '" class="item-closed">',
-				'<span class="item-title"><a href="' + item.link + '">' + item.title + '</a></span>',
-				'<span class="item-date">' + item.published + '</span>',
-				'<span class="item-summary">' + item.content + '</span>',
-			'</li>'
-		].join('');
-
-		return content;
-	}
 
 	</script>
 </head>
