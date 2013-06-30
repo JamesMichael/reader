@@ -40,12 +40,15 @@ print STDERR "added $subscription_count subcriptions\n" if $verbose;
 sub add_feed {
     my ($model, $uri, $link, $title) = @_;
 
+    my $paused = $uri =~ /twitter\.com/;
+
     my $feed = $model->resultset('Feed')->create({
         uri         => $uri,
         title       => $title,
         link        => $link,
         description => $title,
         author      => '',
+        paused      => $paused,
     });
 }
 
