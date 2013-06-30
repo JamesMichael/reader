@@ -40,6 +40,7 @@ sub parse_item {
         title       => $node->findvalue('./title'),
         published   => $node->findvalue('./pubDate'),
         summary     => $node->findvalue('./description'),
+        content     => '',
         links       => \@links,
     };
 }

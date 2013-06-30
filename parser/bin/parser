@@ -139,6 +139,9 @@ sub update_item {
         }
     )->single;
 
+    my $content = length $data->content > length $data->summary ? $data->content
+                : $data->summary || $data->content || '';
+
     if ($item) {
         # update existing item
         $item->title($data->{title});
