@@ -68,7 +68,7 @@ while ($iteration_count--) {
     $result = update_feed($feed, $header);
     my $updated_feed_text = $result ? ' updated metadata' : '';
 
-    my ($new_items, $updated_items, $unchanged_items, $error_items) = (0) x 3;
+    my ($new_items, $updated_items, $unchanged_items, $error_items) = (0) x 4;
     foreach my $item (@$items) {
         $result = update_item($model, $feed, $item);
 
