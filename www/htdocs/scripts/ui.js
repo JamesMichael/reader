@@ -18,7 +18,7 @@ var UI = (function($) {
 	    var container = $('#item_container');
 
 	    // de-select current item
-	    container.find('item-opened').removeClass('item-opened').addClass('item-closed');
+	    container.find('.item-opened').removeClass('item-opened').addClass('item-closed');
 
 	    // select new item
         container.children().eq(index).removeClass('item-closed').addClass('item-opened');
