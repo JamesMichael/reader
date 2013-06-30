@@ -17,7 +17,11 @@ li.item-closed .item-link {
 }
 
 li.item-closed .item-summary {
-    display:none;
+    display: none;
+}
+
+li.item-closed .item-actions {
+    display: none;
 }
 
 #item_container > li {
