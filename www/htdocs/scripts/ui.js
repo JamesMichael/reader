@@ -85,6 +85,11 @@ var UI = (function($) {
         return element_id.match(/reader-item-id-(\d+)/)[1];
     }
 
+    function selected_item() {
+        var container = $('#item_container');
+        return container.children().eq(selected_item_index);
+    }
+
     ui.load_unread_items = function() {
         var container = $('#item_container');
         container.empty();
