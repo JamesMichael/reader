@@ -8,7 +8,21 @@ var API = (function($) {
             url: full_url,
         })
     }
-    
+
+    function post(path, parameters) {
+        var full_url = base_url + path;
+
+        var parameter_string = Object.keys(parameters).map(function(key){
+            return key + '=' + parameters[key]
+        }).join('&');
+
+        return $.ajax({
+            url: full_url,
+            method: 'POST',
+            data: parameter_string,
+        });
+    }
+
     api.get_feeds = function() {
         return get('feeds');
     };
