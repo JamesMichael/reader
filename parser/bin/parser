@@ -15,6 +15,14 @@ Readonly my $UNPARSED_DIR   => "/opt/reader/var/feeds/unparsed";
 Readonly my $PARSED_DIR     => "/opt/reader/var/feeds/parsed";
 Readonly my $ERROR_DIR      => "/opt/reader/var/feeds/error";
 
+Readonly my $FEED_UNCHANGED => 0;
+Readonly my $FEED_UPDATED   => 1;
+
+Readonly my $ITEM_NEW       => 0;
+Readonly my $ITEM_UNCHANGED => 1;
+Readonly my $ITEM_UPDATED   => 2;
+Readonly my $ITEM_ERROR     => 3;
+
 my $model = Reader::Model::model;
 
 my ($successful_parses, $unsuccessful_parses) = (0) x 2;
@@ -58,9 +66,19 @@ while ($iteration_count--) {
     }
 
     $result = update_feed($feed, $header);
+    my $updated_feed_text = $result ? ' updated metadata' : '';
+
+    my ($new_items, $updated_items, $unchanged_items, $error_items) = (0) x 3;
     foreach my $item (@$items) {
         $result = update_item($model, $feed, $item);
+
+        $new_items++        if $result == $ITEM_NEW;
+        $unchanged_items++  if $result == $ITEM_UNCHANGED;
+        $updated_items++    if $result == $ITEM_UPDATED;
+        $error_items++      if $result == $ITEM_ERROR;
     }
+
+    print "[INFO] $filename: ($new_items, $updated_items, $unchanged_items, $error_items) $updated_feed_text\n";
 
     $fetch->status('parsed');
     $fetch->update;
@@ -102,13 +120,11 @@ sub update_feed {
     if ($feed->is_changed) {
         my %columns = $feed->get_dirty_columns;
         my $description = join ', ', map { "$_ => $columns{$_}" } keys %columns;
-        print "[INFO] FEED ", $feed->id, ": updated $description\n";
         $feed->update;
+        return $FEED_UPDATED;
     } else {
-        print "[INFO] FEED ", $feed->id, ": no change\n";
+        return $FEED_UNCHANGED;
     }
-
-    return $feed;
 }
 
 sub update_item {
@@ -135,10 +151,10 @@ sub update_item {
         if ($item->is_changed) {
             my %columns = $item->get_dirty_columns;
             my $description = join ', ', map { "$_ => $columns{$_}" } keys %columns;
-            print "[INFO] FEED ", $feed->id, " ITEM ", $item->id, ": updated $description\n";
             $item->update;
+            return $ITEM_UPDATED;
         } else {
-            print "[INFO] FEED ", $feed->id, " ITEM ", $item->id, ": no change\n";
+            return $ITEM_UNCHANGED;
         }
     } else {
         # insert new item
@@ -160,9 +176,10 @@ sub update_item {
         });
 
         if ($item) {
-            print "[INFO] FEED ", $feed->id, " ITEM ", $item->id, ": added new item\n";
+            return $ITEM_NEW;
         } else {
             print "[ERROR] FEED ", $feed->id, " ITEM ", $data->{title}, ": could not be added\n";
+            return $ITEM_ERROR;
         }
     }
 
