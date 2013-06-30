@@ -38,6 +38,14 @@ var UI = (function($) {
         );
     }
 
+    function item_id_to_element_id(item_id) {
+        return 'reader-item-id-' + item_id;
+    }
+
+    function element_id_to_item_id(element_id) {
+        return element_id.match(/reader-item-id-(\d+)/)[1];
+    }
+
     ui.load_unread_items = function() {
         var container = $('#item_container');
         container.empty();
