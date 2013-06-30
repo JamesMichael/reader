@@ -27,6 +27,11 @@ fi
 # generate new tables
 cat "$DB_PATH/"*.sql | sqlite3 "$DB_PATH/$DB_NAME"
 
+# delete existing raw feeds
+rm /opt/reader/var/feeds/error/*
+rm /opt/reader/var/feeds/parsed/*
+rm /opt/reader/var/feeds/unparsed/*
+
 if [ ! -e "$SUBSCRIPTIONS_FILE" ]
 then
     exit
