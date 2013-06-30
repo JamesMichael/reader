@@ -146,7 +146,7 @@ sub update_item {
         # update existing item
         $item->title($data->{title});
         $item->link(join ', ', @{$data->{links}});
-        $item->content($data->{summary});
+        $item->content($content);
 
         if ($item->is_changed) {
             my %columns = $item->get_dirty_columns;
@@ -171,7 +171,7 @@ sub update_item {
             guid        => $unique_id,
             title       => $data->{title},
             link        => join(', ', @{$data->{links}}),
-            content     => $data->{summary},
+            content     => $content,
             published   => $original_publish_date,
         });
 
