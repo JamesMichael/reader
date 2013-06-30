@@ -32,9 +32,9 @@ var UI = (function($) {
     function scroll_to_item(index) {
         var container = $('html,body');
         var item = $('#item_container').children().eq(index);
-        container.animate({
-            scrollTop: item.offset().top - container.offset().top + container.scrollTop()
-        });
+        container.scrollTop(
+            item.offset().top - container.offset().top + container.scrollTop()
+        );
     }
 
     ui.load_unread_items = function() {
