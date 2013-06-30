@@ -120,5 +120,23 @@ var UI = (function($) {
         select_item(selected_item_index + 1);
     }
 
+    ui.toggle_read = function() {
+        var item       = selected_item();
+        var item_id    = element_id_to_item_id(item.attr('id'));
+        var item_state = item.data('state');
+
+        if (item_state == 'read') {
+            promise = API.mark_unread(item_id);
+        } else {
+            promise = API.mark_read(item_id);
+        }
+
+        promise.success(function(data) {
+            // this should probably be returned by the api
+            var new_state = item_state == 'read' ? 'unread' : 'read';
+            update_item_state(item_id, new_state);
+        });
+	};
+
     return ui;
 }($));
