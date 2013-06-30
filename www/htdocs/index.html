@@ -15,10 +15,16 @@
 	document.onkeydown = function(event) {
 		switch (event.keyCode) {
 			case 74:
+				// j
 				UI.select_next();
 				break;
 			case 75:
+				// k
 				UI.select_previous();
+				break;
+			case 77:
+				// m
+				UI.toggle_read();
 				break;
 		}
 	};
