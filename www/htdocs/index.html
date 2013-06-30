@@ -15,13 +15,18 @@
 	document.onkeydown = function(event) {
 		switch (event.keyCode) {
 			case 74: // j
-			case 32: // <space>
 				UI.select_next();
 				break;
-			case 75:
-				// k
+			case 75: // k
 				UI.select_previous();
 				break;
+			case 32: // <space>
+				if (event.shiftKey) {
+					UI.select_previous();
+				} else {
+					UI.select_next();
+				}
+				event.preventDefault();
 			case 77:
 				// m
 				UI.toggle_read();
