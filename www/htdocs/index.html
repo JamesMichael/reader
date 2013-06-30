@@ -12,6 +12,17 @@
 		UI.load_unread_items();
 	});
 
+	document.onkeydown = function(event) {
+		switch (event.keyCode) {
+			case 74:
+				UI.select_next();
+				break;
+			case 75:
+				UI.select_previous();
+				break;
+		}
+	};
+
 	</script>
 </head>
 <body>
