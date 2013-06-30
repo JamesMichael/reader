@@ -22,6 +22,8 @@ var UI = (function($) {
 
 	    // select new item
         container.children().eq(index).removeClass('item-closed').addClass('item-opened');
+
+        selected_item_index = index;
     }
 
     ui.load_unread_items = function() {
@@ -34,8 +36,7 @@ var UI = (function($) {
 				container.append(content);
 			});
 
-		    selected_item_index = 0;
-		    select_item(selected_item_index);
+		    select_item(0);
 		});
 	};
 
