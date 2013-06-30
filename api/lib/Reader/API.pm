@@ -40,6 +40,7 @@ GET '/feeds' => sub {
         {
         },
         {
+            order_by => { -desc => 'published' },
         },
     );
 
