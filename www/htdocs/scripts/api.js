@@ -2,7 +2,7 @@ var API = (function($) {
     var api = {};
     var base_url = '/api/';
     
-    function get(path, callback) { 
+    function get(path) {
         var full_url = base_url + path;
         return $.ajax({
             url: full_url,
