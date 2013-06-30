@@ -22,7 +22,7 @@ var UI = (function($) {
 	    // build toggle item read action
 	    var item_state           = item.data('state');
 	    var toggle_state_text    = item_state == 'read' ? 'Mark unread' : 'Mark read';
-	    var toggle_state_element = $('<a href="javascript:void(0)" id="toggle-state">' + toggle_state_text + '</a>');
+	    var toggle_state_element = $('<a href="javascript:void(0)" class="toggle-state">' + toggle_state_text + '</a>');
 
 	    // replace existing toggle action
 	    item.find('.item-actions .toggle-state').remove();
