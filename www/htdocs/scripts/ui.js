@@ -40,5 +40,21 @@ var UI = (function($) {
 		});
 	};
 
+	ui.select_previous = function() {
+	    if (selected_item_index <= 0) {
+            return;
+        }
+
+        select_item(selected_item_index - 1);
+    }
+    
+    ui.select_next = function() {
+        if (selected_item_index >= $('#item_container').children().length) {
+            return;
+        }
+
+        select_item(selected_item_index + 1);
+    }
+
     return ui;
 }($));
