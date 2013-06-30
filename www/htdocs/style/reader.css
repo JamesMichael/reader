@@ -1,3 +1,7 @@
+* {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
 ul#item_container {
     list-style-type: none;
     margin: 0;
