@@ -33,10 +33,10 @@ var UI = (function($) {
 				var content = format_item(item);
 				container.append(content);
 			});
-		});
 
-		selected_item_index = 0;
-		select_item(selected_item_index);
+		    selected_item_index = 0;
+		    select_item(selected_item_index);
+		});
 	};
 
     return ui;
