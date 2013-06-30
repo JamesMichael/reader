@@ -29,7 +29,7 @@ foreach my $context ($subscriptions->get_nodelist) {
     my $link    = $xpath->find('./@htmlUrl', $context)->string_value;
     my $title   = $xpath->find('./@title', $context)->string_value;
 
-    print STDERR "adding description '$title'\n" if $verbose;
+    print STDERR "adding subscription '$title'\n" if $verbose;
     add_feed($model, $uri, $title, $link);
 
     $subscription_count++;
