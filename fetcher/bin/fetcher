@@ -35,7 +35,7 @@ while ($iteration_count--) {
     my ($result, $message) = Reader::Fetcher::fetch($fetch->{feed}, $fetch_tag);
 
     if ($result) {
-        print "[INFO] successfully fetched $feed_id\n";
+        print "[INFO] FEED $feed_id successfully fetched to '$feed_id.$fetch_tag'\n";
         $fetch->{feed}->create_related('fetches', {
             fetch_date  => DateTime->now->epoch,
             filename    => "$feed_id.$fetch_tag.xml",
@@ -43,7 +43,7 @@ while ($iteration_count--) {
         });
         $successful_fetches++;
     } else {
-        print "[ERROR] error fetching $feed_id \n";
+        print "[ERROR] FEED $feed_id fetch error\n";
         $fetch->{feed}->create_related('fetches', {
             fetch_date  => DateTime->now->epoch,
             filename    => '',
