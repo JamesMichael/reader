@@ -14,6 +14,7 @@ Requires:	perl(DateTime)
 Requires:	perl(HTTP::Request::Common)
 Requires:	perl(LWP::UserAgent)
 Requires:	perl(Readonly)
+Requires:	perl(Crypt::SSLeay)
 
 Requires:	reader-tools
 
