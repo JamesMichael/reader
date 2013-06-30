@@ -44,3 +44,10 @@ li.item-closed .item-summary {
      display: block;
      font-weight: bold;
 }
+
+.item-link a {
+    padding: 0.5em 1em;
+    display: block;
+    color: #333;
+    text-decoration: none;
+}
