@@ -51,3 +51,8 @@ li.item-closed .item-summary {
     color: #333;
     text-decoration: none;
 }
+
+.item-summary {
+    display: block;
+    padding: 0 1em;
+}
