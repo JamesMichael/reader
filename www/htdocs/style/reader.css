@@ -12,6 +12,10 @@ span.item-date {
     display: none;
 }
 
+li.item-closed .item-link {
+    display: none;
+}
+
 li.item-closed .item-summary {
     display:none;
 }
