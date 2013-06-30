@@ -18,6 +18,7 @@ sub parse {
     my $parser = XML::LibXML->load_xml(
         string      => $xml,
         recover     => 2,
+        keep_blanks => 0,       # returns cdata
     );
 
     my $xpath = XML::LibXML::XPathContext->new($parser);
