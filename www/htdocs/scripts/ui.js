@@ -16,6 +16,42 @@ var UI = (function($) {
 		return content;
 	}
 
+	function build_action_panel(item_id) {
+	    var item                 = $('#' + item_id_to_element_id(item_id));
+
+	    // build toggle item read action
+	    var item_state           = item.data('state');
+	    var toggle_state_text    = item_state == 'read' ? 'Mark unread' : 'Mark read';
+	    var toggle_state_element = $('<a href="javascript:void(0)" id="toggle-state">' + toggle_state_text + '</a>');
+
+	    // replace existing toggle action
+	    item.find('.item-actions .toggle-state').remove();
+	    item.find('.item-actions').append(toggle_state_element);
+
+	    // when clicking, toggle element state
+	    toggle_state_element.on('click', function(event) {
+	        var promise;
+	        if (item_state == 'read') {
+	            promise = API.mark_unread(item_id);
+	        } else {
+	            promise = API.mark_read(item_id);
+	        }
+
+	        promise.success(function(data) {
+	            // this should probably be returned by the api
+	            var new_state = item_state == 'read' ? 'unread' : 'read';
+	            update_item_state(item_id, new_state);
+            });
+        });
+    }
+
+    function update_item_state(item_id, new_state) {
+        var item = $('#' + item_id_to_element_id(item_id));
+        item.data('state', new_state);
+
+        build_action_panel(item_id);
+    }
+
 	function select_item(index) {
 	    var container = $('#item_container');
 
@@ -28,6 +64,9 @@ var UI = (function($) {
         selected_item_index = index;
 
         scroll_to_item(index);
+
+        var item_id = element_id_to_item_id(container.children().eq(index).attr('id'));
+        build_action_panel(item_id);
     }
 
     function scroll_to_item(index) {
