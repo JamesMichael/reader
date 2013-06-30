@@ -9,6 +9,7 @@ var UI = (function($) {
 				'<span class="item-link"><a href="' + item.link + '">' + item.title + '</a></span>',
 				'<span class="item-date">' + item.published + '</span>',
 				'<span class="item-summary">' + item.content + '</span>',
+				'<span class="item-actions"></span>',
 			'</li>'
 		].join('');
 
