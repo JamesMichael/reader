@@ -5,7 +5,8 @@ var UI = (function($) {
 	function format_item(item) {
         var content = [
              '<li id="' + item.id + '" class="item-closed">',
-				'<span class="item-title"><a href="' + item.link + '">' + item.title + '</a></span>',
+				'<span class="item-title">' + item.title + '</span>',
+				'<span class="item-link"><a href="' + item.link + '">' + item.title + '</a></span>',
 				'<span class="item-date">' + item.published + '</span>',
 				'<span class="item-summary">' + item.content + '</span>',
 			'</li>'
