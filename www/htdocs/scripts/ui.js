@@ -52,6 +52,12 @@ var UI = (function($) {
         build_action_panel(item_id);
     }
 
+    function select_item_by_id(item_id) {
+        var element_id = item_id_to_element_id(item_id);
+        var item = $('#' + element_id);
+        select_item(item.index());
+    }
+
 	function select_item(index) {
 	    var container = $('#item_container');
 
