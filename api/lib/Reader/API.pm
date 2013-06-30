@@ -40,7 +40,6 @@ GET '/feeds' => sub {
         {
         },
         {
-            order_by => { -desc => 'published' },
         },
     );
 
@@ -122,6 +121,7 @@ GET '/list/[:state]' => sub {
         },
         {
             join => 'state',
+            order_by => { -desc => 'published' },
         },
     );
 
