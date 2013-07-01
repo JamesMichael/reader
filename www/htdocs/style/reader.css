@@ -49,9 +49,12 @@ li.item-closed .item-actions {
      font-weight: bold;
 }
 
-.item-link a {
+.item-link {
     padding: 0.5em 1em;
     display: block;
+}
+
+.item-link a {
     color: #333;
     text-decoration: none;
 }
