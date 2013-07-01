@@ -133,7 +133,7 @@ var UI = (function($) {
     }
     
     ui.select_next = function() {
-        if (selected_item_index >= $('#item_container').children().length) {
+        if (selected_item_index + 1 >= $('#item_container').children().length) {
             return;
         }
 
