@@ -66,6 +66,9 @@ var UI = (function($) {
 
 	    // select new item
 	    var item = container.children().eq(index);
+	    if (item === undefined) {
+	        return;
+	    }
 	    item.removeClass('item-closed').addClass('item-opened');
 
         selected_item_index = index;
