@@ -78,7 +78,11 @@ var UI = (function($) {
         // mark item as read
         // unless the user has previously kept the item unread
         if (item.data('kept-unread') != true) {
-            API.mark_read(item_id);
+            var promise = API.mark_read(item_id);
+
+            promise.success(function(data) {
+                update_item_state(item_id, 'read');
+            });
         }
     }
 
