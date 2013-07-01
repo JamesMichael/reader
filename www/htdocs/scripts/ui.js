@@ -66,7 +66,7 @@ var UI = (function($) {
 
 	    // select new item
 	    var item = container.children().eq(index);
-	    if (item === undefined) {
+	    if (item.length == 0) {
 	        return;
 	    }
 	    item.removeClass('item-closed').addClass('item-opened');
