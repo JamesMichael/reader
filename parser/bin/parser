@@ -163,7 +163,7 @@ sub update_item {
         })->single;
 
         # convert stringy date to unix timestamp
-        my $original_publish_date = str2time( $data->{published} );
+        my $original_publish_date = str2time( $data->{published} ) || time;
 
         $item = $model->resultset('Item')->create({
             feed_id     => $feed->id,
