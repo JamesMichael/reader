@@ -168,5 +168,15 @@ var UI = (function($) {
         });
 	};
 
+	ui.open_item_in_background = function() {
+	    var item = selected_item();
+	    var link = item.find('.item-link a').get(0);
+
+	    // simulate a control-click
+	    var click_event = document.createEvent('MouseEvents');
+	    click_event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, true, false, false, false, 0, null);
+	    link.dispatchEvent(click_event);
+    };
+
     return ui;
 }($));
