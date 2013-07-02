@@ -2,6 +2,12 @@
     font-family: Helvetica, Arial, sans-serif;
 }
 
+#sidebar {
+    background-color: #333;
+    color: #fff;
+    height: 100%;
+}
+
 ul#item_container {
     list-style-type: none;
     margin: 0;
