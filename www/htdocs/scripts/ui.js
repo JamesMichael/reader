@@ -101,7 +101,7 @@ var UI = (function($) {
 
         // mark item as read
         // unless the user has previously kept the item unread
-        if (item.data('kept-unread') != true) {
+        if (item.data('kept-unread') != true && item.data('state') == 'unread') {
             var promise = API.mark_read(item_id);
 
             promise.success(function(data) {
