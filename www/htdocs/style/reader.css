@@ -29,6 +29,21 @@
     font-size: 1.5em;
 }
 
+@-webkit-keyframes rotating {
+    from{
+        -webkit-transform: rotate(0deg);
+    }
+    to{
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.refresh-animation {
+    -webkit-animation: rotating 2s linear infinite;
+    -webkit-transform-origin: 7px 8px;
+    display: inline-block;
+}
+
 #main-content {
     margin: 0;
 }

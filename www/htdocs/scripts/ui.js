@@ -2,6 +2,11 @@ var UI = (function($) {
     var ui = {};
     var selected_item_index = 0;
     var unread_count = 0;
+    var is_refreshing = false;
+
+    $('#refresh-button').on('click', function(event) {
+        UI.load_unread_items();
+    });
 
 	function format_item(item) {
         var content = [
@@ -132,6 +137,17 @@ var UI = (function($) {
     }
 
     ui.load_unread_items = function() {
+        // don't refresh items twice at once
+        if (is_refreshing) {
+            return;
+        }
+
+        // disable refresh button
+        is_refreshing = true;
+
+        // begin animation
+        $('#refresh-button .glyphicon-refresh').addClass('refresh-animation');
+
         var container = $('#item_container');
         container.empty();
 
@@ -148,6 +164,12 @@ var UI = (function($) {
 			unread_count = data.items.length;
 
 		    select_item(0);
+
+		    // enable refresh button
+		    is_refreshing = false;
+
+		    // stop animation
+            $('#refresh-button .glyphicon-refresh').removeClass('refresh-animation');
 		});
 	};
 
