@@ -1,6 +1,7 @@
 var UI = (function($) {
     var ui = {};
     var selected_item_index = 0;
+    var unread_count = 0;
 
 	function format_item(item) {
         var content = [
@@ -46,6 +47,12 @@ var UI = (function($) {
     }
 
     function update_item_state(item_id, new_state) {
+        if (new_state == 'read') {
+            decrement_unread_count();
+        } else {
+            increment_unread_count();
+        }
+
         var item = $('#' + item_id_to_element_id(item_id));
         item.data('state', new_state);
 
@@ -56,6 +63,20 @@ var UI = (function($) {
         var element_id = item_id_to_element_id(item_id);
         var item = $('#' + element_id);
         select_item(item.index());
+    }
+
+    function update_unread_counter() {
+        $('#item-count').html(unread_count);
+    }
+
+    function decrement_unread_count() {
+        unread_count--;
+        update_unread_counter();
+    }
+
+    function increment_unread_count() {
+        unread_count++;
+        update_unread_counter();
     }
 
 	function select_item(index) {
