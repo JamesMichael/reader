@@ -21,6 +21,10 @@
     }
 }
 
+#main-content {
+    margin: 0;
+}
+
 ul#item_container {
     list-style-type: none;
     margin: 0;
