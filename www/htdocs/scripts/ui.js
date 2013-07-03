@@ -144,6 +144,9 @@ var UI = (function($) {
 				});
 			});
 
+			// update the number of unread items
+			unread_count = data.items.length;
+
 		    select_item(0);
 		});
 	};
