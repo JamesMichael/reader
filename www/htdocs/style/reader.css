@@ -14,6 +14,10 @@
     #sidebar {
         height: 100%;
     }
+
+    #sidebar > li {
+        margin-top: 1em;
+    }
 }
 
 @media(max-width: 992px) {
