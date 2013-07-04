@@ -12,6 +12,14 @@
 				<li>RSS Reader</li>
 				<li><span id="item-count">0</span>unread</li>
 				<li><a id="refresh-button" class="btn btn-default" href="#"><i class="glyphicon glyphicon-refresh"></i></a></li>
+				<li><div class="btn-group-vertical">
+					<button type="button" class="btn btn-default" onclick="UI.select_previous()">
+						<i class="glyphicon glyphicon-chevron-up"></i>
+					</button>
+					<button type="button" class="btn btn-default" onclick="UI.select_next()">
+						<i class="glyphicon glyphicon-chevron-down"></i>
+					</button>
+				</div></li>
 			</ul>
 			<div class="col col-lg-11 col-offset-1"><ul id="item_container"></ul></div>
 		</div>
