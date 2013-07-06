@@ -20,6 +20,7 @@
 @media(min-width: 992px) {
     #sidebar {
         height: 100%;
+        width: 94px;
     }
 
     #sidebar > li {
