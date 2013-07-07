@@ -6,22 +6,22 @@
 	<link rel="stylesheet" type="text/css" href="style/reader.css">
 </head>
 <body>
+	<ul class="col col-lg-1" id="sidebar">
+		<li id="title">Reader</li>
+		<li><span id="item-count">0</span><span id="item-count-label">unread</span></li>
+		<li><a id="refresh-button" class="btn btn-default btn-small" href="#"><i class="glyphicon glyphicon-refresh"></i></a></li>
+		<li><div class="btn-group-vertical">
+			<button type="button" class="btn btn-default btn-small" onclick="UI.select_previous()">
+				<i class="glyphicon glyphicon-chevron-up"></i>
+			</button>
+			<button type="button" class="btn btn-default btn-small" onclick="UI.select_next()">
+				<i class="glyphicon glyphicon-chevron-down"></i>
+			</button>
+		</div></li>
+	</ul>
 	<div class="container-fluid">
 		<div class="row" id="main-content">
-			<ul class="col col-lg-1" data-spy="affix" id="sidebar">
-				<li id="title">Reader</li>
-				<li><span id="item-count">0</span><span id="item-count-label">unread</span></li>
-				<li><a id="refresh-button" class="btn btn-default btn-small" href="#"><i class="glyphicon glyphicon-refresh"></i></a></li>
-				<li><div class="btn-group-vertical">
-					<button type="button" class="btn btn-default btn-small" onclick="UI.select_previous()">
-						<i class="glyphicon glyphicon-chevron-up"></i>
-					</button>
-					<button type="button" class="btn btn-default btn-small" onclick="UI.select_next()">
-						<i class="glyphicon glyphicon-chevron-down"></i>
-					</button>
-				</div></li>
-			</ul>
-			<div class="col col-lg-11 col-offset-1"><ul id="item_container"></ul></div>
+			<div class="col col-lg-12"><ul id="item_container"></ul></div>
 		</div>
 	</div>
 
