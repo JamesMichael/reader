@@ -29,9 +29,33 @@
 }
 
 @media(max-width: 992px) {
+    body {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
     #sidebar {
         position: static;
         width: 100%;
+        z-index: 2;
+    }
+
+    #main-content {
+        margin-top: 50px;
+    }
+
+    #title {
+        font-size: 1.4em;
+        line-height:20px;
+        padding: 15px;
+        float: left;
+    }
+
+    .sidebar-button {
+        float: right;
+        padding: 10px;
+        padding-right: 0;
     }
 }
 

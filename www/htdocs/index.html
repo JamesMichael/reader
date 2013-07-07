@@ -8,8 +8,8 @@
 <body>
 	<ul class="col col-lg-1" id="sidebar">
 		<li id="title">Reader</li>
-		<li><span id="item-count">0</span><span id="item-count-label">unread</span></li>
-		<li class="hidden-lg"><div class="btn-group">
+		<li class="visible-lg"><span id="item-count">0</span><span id="item-count-label">unread</span></li>
+		<li class="hidden-lg sidebar-button"><div class="btn-group">
 			<button type="button" class="btn btn-default btn-small" onclick="UI.select_previous()">
 				<i class="glyphicon glyphicon-chevron-up"></i>
 			</button>
@@ -17,7 +17,7 @@
 				<i class="glyphicon glyphicon-chevron-down"></i>
 			</button>
 		</div></li>
-		<li><a id="refresh-button" class="btn btn-default btn-small" href="#"><i class="glyphicon glyphicon-refresh"></i></a></li>
+		<li class="sidebar-button"><a id="refresh-button" class="btn btn-default btn-small" href="#"><i class="glyphicon glyphicon-refresh"></i></a></li>
 		<li class="visible-lg"><div class="btn-group-vertical">
 			<button type="button" class="btn btn-default btn-small" onclick="UI.select_previous()">
 				<i class="glyphicon glyphicon-chevron-up"></i>
