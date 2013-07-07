@@ -62,7 +62,12 @@
 
 #main-content {
     margin: 0;
-    margin-left: 75px;
+}
+
+@media(min-width: 992px) {
+    #main-content {
+        margin-left: 75px;
+    }
 }
 
 ul#item_container {
