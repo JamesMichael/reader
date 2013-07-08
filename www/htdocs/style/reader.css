@@ -17,6 +17,11 @@
     font-size: 1.2em;
 }
 
+
+#main-content {
+    margin: 0;
+}
+
 @media(min-width: 992px) {
     #sidebar {
         height: 100%;
@@ -87,10 +92,6 @@
     -webkit-animation: rotating 2s linear infinite;
     -webkit-transform-origin: 7px 8px;
     display: inline-block;
-}
-
-#main-content {
-    margin: 0;
 }
 
 ul#item_container {
