@@ -88,12 +88,6 @@
     }
 }
 
-.refresh-animation {
-    -webkit-animation: rotating 2s linear infinite;
-    -webkit-transform-origin: 7px 8px;
-    display: inline-block;
-}
-
 ul#item_container {
     list-style-type: none;
     margin: 0;
