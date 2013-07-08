@@ -26,6 +26,11 @@
     #sidebar > li {
         margin-top: 1em;
     }
+    
+    
+    #main-content {
+        margin-left: 75px;
+    }
 }
 
 @media(max-width: 992px) {
@@ -85,12 +90,6 @@
 
 #main-content {
     margin: 0;
-}
-
-@media(min-width: 992px) {
-    #main-content {
-        margin-left: 75px;
-    }
 }
 
 ul#item_container {
