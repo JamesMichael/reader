@@ -38,6 +38,7 @@ var UI = (function($) {
 	    toggle_state_element.on('click', function(event) {
 	        var promise;
 	        if (item_state == 'read') {
+	            item.data('kept-unread', true);
 	            promise = API.mark_unread(item_id);
 	        } else {
 	            promise = API.mark_read(item_id);
