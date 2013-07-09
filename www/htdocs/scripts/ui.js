@@ -118,8 +118,13 @@ var UI = (function($) {
     function scroll_to_item(index) {
         var container = $('html,body');
         var item = $('#item_container').children().eq(index);
+
+        // handle offset on small screens
+        // when sidebar is across the top of the page
+        var topbar_offset = $(window).width() < 992 ? $('#sidebar').height() : 0;
+
         container.scrollTop(
-            item.offset().top - container.offset().top + container.scrollTop()
+            item.offset().top - container.offset().top + container.scrollTop() - topbar_offset
         );
     }
 
