@@ -49,6 +49,7 @@
         width: 100%;
         z-index: 2;
         height: 60px;
+        opacity: 0.95;
     }
 
     #main-content {
