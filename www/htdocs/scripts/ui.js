@@ -27,8 +27,14 @@ var UI = (function($) {
 
 	    // build toggle item read action
 	    var item_state           = item.data('state');
-	    var toggle_state_text    = item_state == 'read' ? 'Mark unread' : 'Mark read';
-	    var toggle_state_element = $('<a href="javascript:void(0)" class="toggle-state">' + toggle_state_text + '</a>');
+	    var toggle_state_text    = 'read';
+        var toggle_state_icon    = item_state == 'read' ? 'glyphicon-check' : 'glyphicon-unchecked';
+	    var toggle_state_element = $([
+            '<a href="javascript:void(0)" class="toggle-state">',
+                '<i class="glyphicon ' + toggle_state_icon + '"></i>',
+                toggle_state_text,
+            '</a>'
+        ].join(''));
 
 	    // replace existing toggle action
 	    item.find('.item-actions .toggle-state').remove();
