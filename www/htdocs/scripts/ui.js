@@ -31,7 +31,7 @@ var UI = (function($) {
         var toggle_state_icon    = item_state == 'read' ? 'glyphicon-check' : 'glyphicon-unchecked';
 	    var toggle_state_element = $([
             '<a href="javascript:void(0)" class="toggle-state">',
-                '<i class="glyphicon ' + toggle_state_icon + '"></i>',
+                '<i class="glyphicon ' + toggle_state_icon + '"></i>&nbsp;',
                 toggle_state_text,
             '</a>'
         ].join(''));
