@@ -154,3 +154,11 @@ li.item-closed .item-actions {
     display: block;
     padding: 0 1em;
 }
+
+.item-actions {
+    margin-top: 0.3em;
+}
+
+.item-actions i {
+    vertical-align: middle;
+}
