@@ -159,10 +159,10 @@ li.item-closed .item-actions {
     margin-top: 0.3em;
 }
 
-.item-actions:hover {
-    text-decoration: none;
-}
-
 .item-actions i {
     vertical-align: middle;
+}
+
+.toggle-state:hover {
+    text-decoration: none;
 }
