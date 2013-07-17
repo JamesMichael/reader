@@ -114,14 +114,6 @@ li.item-closed .item-actions {
     display: none;
 }
 
-#item_container > li {
-    border-top: 1px solid #ccc;
-}
-
-#item_container > li:first-child {
-    border-top: none;
-}
-
 .item-closed {
     padding: 0.5em 0;
 }
