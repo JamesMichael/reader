@@ -12,10 +12,10 @@ var UI = (function($) {
         var content = [
              '<li id="reader-item-id-' + item.id + '" class="item-closed" data-state="' + item.state + '">',
 				'<span class="item-title">' + item.title + ' - ' + item.feed_name + '</span>',
+                '<div class="item-actions"></div>',
 				'<span class="item-link"><a href="' + item.link + '" target="_blank">' + item.title + '</a></span>',
 				'<span class="item-date">' + item.published + '</span>',
 				'<div class="item-summary clearfix">' + item.content + '</div>',
-				'<div class="item-actions"></div>',
 			'</li>'
 		].join('');
 
