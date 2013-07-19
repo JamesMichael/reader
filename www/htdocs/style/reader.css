@@ -132,6 +132,14 @@ li.item-closed .item-actions {
      cursor: pointer;
 }
 
+.item-feed-name {
+    width: 150px;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    float: left;
+    white-space: nowrap;
+}
+
 .item-link {
     padding: 0.5em 1em;
     display: block;
