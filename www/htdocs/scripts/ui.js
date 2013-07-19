@@ -11,7 +11,8 @@ var UI = (function($) {
 	function format_item(item) {
         var content = [
              '<li id="reader-item-id-' + item.id + '" class="item-closed" data-state="' + item.state + '">',
-				'<span class="item-title">' + item.title + ' - ' + item.feed_name + '</span>',
+                '<span class="item-feed-name visible-lg">' + item.feed_name + '</span>',
+				'<span class="item-title">' + item.title + '</span>',
                 '<div class="item-actions"></div>',
 				'<span class="item-link"><a href="' + item.link + '" target="_blank">' + item.title + '</a></span>',
 				'<span class="item-date">' + item.published + '</span>',
