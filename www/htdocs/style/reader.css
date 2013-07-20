@@ -128,7 +128,6 @@ li.item-closed .item-actions {
      text-decoration: none;
      padding: 0.5em 1em;
      display: block;
-     font-weight: bold;
      cursor: pointer;
 }
 
@@ -138,6 +137,10 @@ li.item-closed .item-actions {
     overflow-x: hidden;
     float: left;
     white-space: nowrap;
+}
+
+.item-title {
+    font-weight: bold;
 }
 
 .item-link {
