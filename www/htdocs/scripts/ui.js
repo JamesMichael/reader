@@ -7,12 +7,21 @@ var UI = (function($) {
     $('#refresh-button').on('click', function(event) {
         UI.load_unread_items();
     });
+    
+    function timestamp_to_datestring(timestamp) {
+        var date = new Date(timestamp * 1000);
+        var string = [
+            date.getHours() + ':' + date.getMinutes(),
+            date.getDate() + '/' + (date.getMonth() + 1)
+        ].join(' ');
+    }
 
 	function format_item(item) {
         var content = [
              '<li id="reader-item-id-' + item.id + '" class="item-closed" data-state="' + item.state + '">',
                 '<div class="item-head">',
                     '<span class="item-feed-name visible-lg">' + item.feed_name + '</span>',
+                    '<span class="item-published visible-lg">' + timestamp_to_datestring(item.published) + '</span>',
 				    '<span class="item-title">' + item.title + '</span>',
                 '</div>',
                 '<div class="item-actions"></div>',
