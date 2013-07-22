@@ -180,7 +180,7 @@ var UI = (function($) {
 			data.items.forEach(function(item) {
 				var content = $(format_item(item));
 				container.append(content);
-				content.find('.item-title').on('click', function(event) {
+				content.find('.item-head').on('click', function(event) {
 				    select_item_by_id(item.id);
 				});
 			});
