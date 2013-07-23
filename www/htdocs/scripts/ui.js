@@ -8,10 +8,14 @@ var UI = (function($) {
         UI.load_unread_items();
     });
     
+    function two_digit_number(number) {
+        return number < 10 ? '0' + number : number;
+    }
+    
     function timestamp_to_datestring(timestamp) {
         var date = new Date(timestamp * 1000);
         var date_string = [
-            date.getHours() + ':' + date.getMinutes(),
+            two_digit_number(date.getHours()) + ':' + two_digit_number(date.getMinutes()),
             date.getDate() + '/' + (date.getMonth() + 1)
         ].join(' ');
         return date_string;
