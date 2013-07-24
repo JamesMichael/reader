@@ -68,3 +68,15 @@ The api responds to HTTP requests, and can be tested using curl
 2. Add Feed
 
         curl -i localhost:11122/feeds/new --data-urlencode 'uri=http://example.com/rss.xml'
+
+## Web Interface
+
+### Dependencies
+
+* nginx
+
+### Building
+
+    ( cd www && /opt/reader/bin/build )
+
+The built reader-www package can then be found in `~/rpmbuild/RPMS/noarch/`.
