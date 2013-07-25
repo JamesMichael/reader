@@ -80,3 +80,29 @@ The api responds to HTTP requests, and can be tested using curl
     ( cd www && /opt/reader/bin/build )
 
 The built reader-www package can then be found in `~/rpmbuild/RPMS/noarch/`.
+
+## Fetcher
+
+* runs via cron once every five minutes
+* determines which feeds are to be fetched based on the time elasped since the last fetch
+* downloads raw feeds to /opt/reader/var/feeds/unparsed
+
+### Dependencies
+
+#### CPAN Modules
+
+* [DateTime](https://metacpan.org/module/DateTime)
+* [HTTP::Message](https://metacpan.org/module/HTTP::Message)
+* [LWP](https://metacpan.org/module/LWP)
+* [Readonly](https://metacpan.org/module/Readonly)
+* [Crypt::SSLeay](https://metacpan.org/module/Crypt::SSLeay)
+
+#### Packages
+
+* reader-tools
+
+### Building
+
+    ( cd fetcher && /opt/reader/bin/build )
+
+The built reader-fetcher package can then be found in `~/rpmbuild/RPMS/noarch/`.
