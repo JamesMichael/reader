@@ -202,20 +202,28 @@ var UI = (function($) {
 		});
 	};
 
-	ui.select_previous = function() {
+	ui.select_previous = function(e) {
 	    if (selected_item_index <= 0) {
             return;
         }
 
         select_item(selected_item_index - 1);
+        
+        if (e) {
+            e.stopPropagation();
+        }
     }
     
-    ui.select_next = function() {
+    ui.select_next = function(e) {
         if (selected_item_index + 1 >= $('#item_container').children().length) {
             return;
         }
 
         select_item(selected_item_index + 1);
+        
+        if (e) {
+            e.stopPropagation();
+        }
     }
 
     ui.toggle_read = function() {
