@@ -11,19 +11,19 @@
 		<li id="title">Reader</li>
 		<li class="visible-lg"><span id="item-count">0</span><span id="item-count-label">unread</span></li>
 		<li class="hidden-lg sidebar-button"><div class="btn-group">
-			<button type="button" class="btn btn-default" onclick="UI.select_previous()">
+			<button type="button" class="btn btn-default previous-item-button">
 				<i class="glyphicon glyphicon-chevron-up"></i>
 			</button>
-			<button type="button" class="btn btn-default" onclick="UI.select_next()">
+			<button type="button" class="btn btn-default next-item-button">
 				<i class="glyphicon glyphicon-chevron-down"></i>
 			</button>
 		</div></li>
 		<li class="sidebar-button"><a id="refresh-button" class="btn btn-default" href="#"><i class="glyphicon glyphicon-refresh"></i></a></li>
 		<li class="visible-lg"><div class="btn-group-vertical">
-			<button type="button" class="btn btn-default" onclick="UI.select_previous()">
+			<button type="button" class="btn btn-default previous-item-button">
 				<i class="glyphicon glyphicon-chevron-up"></i>
 			</button>
-			<button type="button" class="btn btn-default" onclick="UI.select_next()">
+			<button type="button" class="btn btn-default next-item-button">
 				<i class="glyphicon glyphicon-chevron-down"></i>
 			</button>
 		</div></li>
@@ -42,6 +42,8 @@
 
 	$(document).ready(function() {
 		UI.load_unread_items();
+		$('button.previous-item-button').on('click', UI.select_previous);
+		$('button.next-item-button').on('click', UI.select_next);
 	});
 
 	document.onkeydown = function(event) {
