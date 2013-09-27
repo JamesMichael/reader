@@ -21,56 +21,56 @@ var UI = (function($) {
         return date_string;
     }
 
-	function format_item(item) {
+    function format_item(item) {
         var content = [
              '<li id="reader-item-id-' + item.id + '" class="item-closed" data-state="' + item.state + '">',
                 '<div class="item-head">',
                     '<span class="item-feed-name visible-lg">' + item.feed_name + '</span>',
                     '<span class="item-published visible-lg">' + timestamp_to_datestring(item.published) + '</span>',
-				    '<span class="item-title">' + item.title + '</span>',
+                    '<span class="item-title">' + item.title + '</span>',
                 '</div>',
                 '<div class="item-actions"></div>',
-				'<span class="item-link"><a href="' + item.link + '" target="_blank">' + item.title + '</a></span>',
-				'<span class="item-date">' + item.published + '</span>',
-				'<div class="item-summary clearfix">' + item.content + '</div>',
-			'</li>'
-		].join('');
+                '<span class="item-link"><a href="' + item.link + '" target="_blank">' + item.title + '</a></span>',
+                '<span class="item-date">' + item.published + '</span>',
+                '<div class="item-summary clearfix">' + item.content + '</div>',
+            '</li>'
+        ].join('');
 
-		return content;
-	}
+        return content;
+    }
 
-	function build_action_panel(item_id) {
-	    var item                 = $('#' + item_id_to_element_id(item_id));
+    function build_action_panel(item_id) {
+        var item                 = $('#' + item_id_to_element_id(item_id));
 
-	    // build toggle item read action
-	    var item_state           = item.data('state');
-	    var toggle_state_text    = 'read';
+        // build toggle item read action
+        var item_state           = item.data('state');
+        var toggle_state_text    = 'read';
         var toggle_state_icon    = item_state == 'read' ? 'glyphicon-check' : 'glyphicon-unchecked';
-	    var toggle_state_element = $([
+        var toggle_state_element = $([
             '<a href="javascript:void(0)" class="toggle-state">',
                 '<i class="glyphicon ' + toggle_state_icon + '"></i>&nbsp;',
                 toggle_state_text,
             '</a>'
         ].join(''));
 
-	    // replace existing toggle action
-	    item.find('.item-actions .toggle-state').remove();
-	    item.find('.item-actions').append(toggle_state_element);
+        // replace existing toggle action
+        item.find('.item-actions .toggle-state').remove();
+        item.find('.item-actions').append(toggle_state_element);
 
-	    // when clicking, toggle element state
-	    toggle_state_element.on('click', function(event) {
-	        var promise;
-	        if (item_state == 'read') {
-	            item.data('kept-unread', true);
-	            promise = API.mark_unread(item_id);
-	        } else {
-	            promise = API.mark_read(item_id);
-	        }
+        // when clicking, toggle element state
+        toggle_state_element.on('click', function(event) {
+            var promise;
+            if (item_state == 'read') {
+                item.data('kept-unread', true);
+                promise = API.mark_unread(item_id);
+            } else {
+                promise = API.mark_read(item_id);
+            }
 
-	        promise.success(function(data) {
-	            // this should probably be returned by the api
-	            var new_state = item_state == 'read' ? 'unread' : 'read';
-	            update_item_state(item_id, new_state);
+            promise.success(function(data) {
+                // this should probably be returned by the api
+                var new_state = item_state == 'read' ? 'unread' : 'read';
+                update_item_state(item_id, new_state);
             });
         });
     }
@@ -108,18 +108,18 @@ var UI = (function($) {
         update_unread_counter();
     }
 
-	function select_item(index) {
-	    var container = $('#item_container');
+    function select_item(index) {
+        var container = $('#item_container');
 
-	    // de-select current item
-	    container.find('.item-opened').removeClass('item-opened').addClass('item-closed');
+        // de-select current item
+        container.find('.item-opened').removeClass('item-opened').addClass('item-closed');
 
-	    // select new item
-	    var item = container.children().eq(index);
-	    if (item.length == 0) {
-	        return;
-	    }
-	    item.removeClass('item-closed').addClass('item-opened');
+        // select new item
+        var item = container.children().eq(index);
+        if (item.length == 0) {
+            return;
+        }
+        item.removeClass('item-closed').addClass('item-opened');
 
         selected_item_index = index;
 
