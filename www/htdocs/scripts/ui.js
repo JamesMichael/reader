@@ -180,30 +180,30 @@ var UI = (function($) {
         var container = $('#item_container');
         container.empty();
 
-		$.when(API.get_next_unread_items()).then(function(data) {
-			data.items.forEach(function(item) {
-				var content = $(format_item(item));
-				container.append(content);
-				content.find('.item-head').on('click', function(event) {
-				    select_item_by_id(item.id);
-				});
-			});
+        $.when(API.get_next_unread_items()).then(function(data) {
+            data.items.forEach(function(item) {
+                var content = $(format_item(item));
+                container.append(content);
+                content.find('.item-head').on('click', function(event) {
+                    select_item_by_id(item.id);
+                });
+            });
 
-			// update the number of unread items
-			unread_count = data.items.length;
+            // update the number of unread items
+            unread_count = data.items.length;
 
-		    select_item(0);
+            select_item(0);
 
-		    // enable refresh button
-		    is_refreshing = false;
+            // enable refresh button
+            is_refreshing = false;
 
-		    // stop animation
+            // stop animation
             $('#refresh-button .glyphicon-refresh').removeClass('refresh-animation');
-		});
-	};
+        });
+    };
 
-	ui.select_previous = function(e) {
-	    if (selected_item_index <= 0) {
+    ui.select_previous = function(e) {
+        if (selected_item_index <= 0) {
             return;
         }
 
@@ -249,16 +249,16 @@ var UI = (function($) {
                 item.data('kept-unread', true);
             }
         });
-	};
+    };
 
-	ui.open_item_in_background = function() {
-	    var item = selected_item();
-	    var link = item.find('.item-link a').get(0);
+    ui.open_item_in_background = function() {
+        var item = selected_item();
+        var link = item.find('.item-link a').get(0);
 
-	    // simulate a control-click
-	    var click_event = document.createEvent('MouseEvents');
-	    click_event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, true, false, false, false, 0, null);
-	    link.dispatchEvent(click_event);
+        // simulate a control-click
+        var click_event = document.createEvent('MouseEvents');
+        click_event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, true, false, false, false, 0, null);
+        link.dispatchEvent(click_event);
     };
 
     return ui;
