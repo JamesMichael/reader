@@ -147,9 +147,7 @@ var UI = (function($) {
         // when sidebar is across the top of the page
         var topbar_offset = $(window).width() < 992 ? $('#sidebar').height() : 0;
 
-        container.scrollTop(
-            item.offset().top - container.offset().top + container.scrollTop() - topbar_offset
-        );
+        container.scrollTop(item.offset().top - container.offset().top - topbar_offset);
     }
 
     function item_id_to_element_id(item_id) {

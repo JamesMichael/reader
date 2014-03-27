@@ -1,5 +1,5 @@
 Name:		reader-www
-Version:	0.2
+Version:	0.3
 Release:	1%{?dist}
 Summary:	Reader Web server files
 
@@ -53,6 +53,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Mar 27 2014 <James Michael> - 0.3-1
+- Fix scroll to item code
+
 * Wed Jul 26 2013 <James Michael> - 0.2-1
 - Use HTTP basic authentication
 
