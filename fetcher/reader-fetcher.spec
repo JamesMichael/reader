@@ -1,5 +1,5 @@
 Name:		reader-fetcher
-Version:	0.2
+Version:	0.3
 Release:	1%{?dist}
 Summary:	Reader Feed Fetcher
 
@@ -69,6 +69,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Aug 04 2014 <James Michael> - 0.3-1
+- Delete successfully parsed feeds after 5 days
+
 * Mon Jul 24 2013 <James Michael> - 0.2-1
 - Add cron job
 

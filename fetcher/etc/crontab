@@ -1,2 +1,5 @@
 # run feed fetcher every five minutes
 */5 * * * * reader /opt/reader/bin/run --name fetcher
+
+# daily: remove successfully parsed feeds after 5 days
+00 9 * * * reader find /opt/reader/var/feeds/parsed -mtime +5 -print0 | xargs -0 rm
