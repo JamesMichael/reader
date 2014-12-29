@@ -54,6 +54,13 @@ var UI = (function($) {
             '</a>'
         ].join(''));
 
+        // update the item star ui based on the 'star' state
+        if (item.data('state') == 'starred') {
+            item.find('.item-star').attr('class', 'glyphicon glyphicon-star item-star');
+        } else {
+            item.find('.item-star').attr('class', 'glyphicon glyphicon-star-empty item-star');
+        }
+
         // replace existing toggle action
         item.find('.item-actions .toggle-state').remove();
         item.find('.item-actions').append(toggle_state_element);
