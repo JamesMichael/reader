@@ -25,6 +25,7 @@ var UI = (function($) {
         var content = [
              '<li id="reader-item-id-' + item.id + '" class="item-closed" data-state="' + item.state + '">',
                 '<div class="item-head">',
+                    '<i class="glyphicon glyphicon-star-empty item-star"></i>',
                     '<span class="item-feed-name visible-lg">' + item.feed_name + '</span>',
                     '<span class="item-published visible-lg">' + timestamp_to_datestring(item.published) + '</span>',
                     '<span class="item-title">' + item.title + '</span>',
