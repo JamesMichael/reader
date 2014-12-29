@@ -46,7 +46,7 @@ var UI = (function($) {
         // build toggle item read action
         var item_state           = item.data('state');
         var toggle_state_text    = 'read';
-        var toggle_state_icon    = item_state == 'read' ? 'glyphicon-check' : 'glyphicon-unchecked';
+        var toggle_state_icon    = item_state == 'unread' ? 'glyphicon-unchecked' : 'glyphicon-check';
         var toggle_state_element = $([
             '<a href="javascript:void(0)" class="toggle-state">',
                 '<i class="glyphicon ' + toggle_state_icon + '"></i>&nbsp;',
@@ -61,29 +61,31 @@ var UI = (function($) {
         // when clicking, toggle element state
         toggle_state_element.on('click', function(event) {
             var promise;
-            if (item_state == 'read') {
+            if (item_state == 'unread') {
+                promise = API.mark_read(item_id);
+            } else {
                 item.data('kept-unread', true);
                 promise = API.mark_unread(item_id);
-            } else {
-                promise = API.mark_read(item_id);
             }
 
             promise.success(function(data) {
                 // this should probably be returned by the api
-                var new_state = item_state == 'read' ? 'unread' : 'read';
+                var new_state = item_state == 'unread' ? 'read' : 'unread';
                 update_item_state(item_id, new_state);
             });
         });
     }
 
     function update_item_state(item_id, new_state) {
-        if (new_state == 'read') {
-            decrement_unread_count();
-        } else {
+        var item = $('#' + item_id_to_element_id(item_id));
+        var old_state = item.data('state');
+
+        if (new_state == 'unread' && old_state != 'unread') {
             increment_unread_count();
+        } else if (new_state != 'unread' && old_state == 'unread') {
+            decrement_unread_count();
         }
 
-        var item = $('#' + item_id_to_element_id(item_id));
         item.data('state', new_state);
 
         build_action_panel(item_id);
