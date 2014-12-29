@@ -163,8 +163,8 @@ POST '/items/:id' => sub {
 
     my $actions = $request->{post_params};
     foreach my $action (keys %$actions) {
-        if ($action eq 'mark-read') {
-            my $value = $actions->{$action} ? 'read' : 'unread';
+        if ($action eq 'change-state') {
+            my $new_state = $actions->{$action} || 'error';
             my $state = $model->resultset('State')->search({
                     'me.state' => $value,
             })->single;
