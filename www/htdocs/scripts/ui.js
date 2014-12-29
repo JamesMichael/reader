@@ -296,5 +296,13 @@ var UI = (function($) {
         });
     }
 
+    ui.toggle_starred = function() {
+        var item       = selected_item();
+        var item_id    = element_id_to_item_id(item.attr('id'));
+        var item_state = item.data('state');
+
+        toggle_star(item_state, item_id);
+    };
+
     return ui;
 }($));
