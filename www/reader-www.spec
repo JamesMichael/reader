@@ -1,5 +1,5 @@
 Name:		reader-www
-Version:	0.3
+Version:	0.4
 Release:	1%{?dist}
 Summary:	Reader Web server files
 
@@ -53,6 +53,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Dec 29 2014 <James Michael> - 0.4-1
+- Add support for 'starred' item state
+
 * Thu Mar 27 2014 <James Michael> - 0.3-1
 - Fix scroll to item code
 

@@ -1,6 +1,6 @@
 Name:		reader-api
-Version:	0.2
-Release:	2%{?dist}
+Version:	0.3
+Release:	1%{?dist}
 Summary:	Reader API server
 
 Group:		Applications/Internet
@@ -65,6 +65,9 @@ rm -rf %{buildroot}
 %attr(-,root,root) /etc/rc.d/init.d/apid
 
 %changelog
+* Mon Dec 29 2014 <James Michael> - 0.3-1
+- Add support for 'starred' item state
+
 * Wed Jul 26 2013 <James Michael> - 0.2-2
 - Add init script and daemonise server
 

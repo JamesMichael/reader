@@ -1,5 +1,5 @@
 Name:		reader-model
-Version:	0.2
+Version:	0.3
 Release:	1%{?dist}
 Summary:	Reader database code
 
@@ -60,6 +60,9 @@ rm -rf %{buildroot}
 /opt/reader/db/state.sql
 
 %changelog
+* Mon Dec 29 2014 <James Michael> - 0.3-1
+- Add support for 'starred' item state
+
 * Thu Jul 27 2013 <James Michael> - 0.2-1
 - Install schema files
 
