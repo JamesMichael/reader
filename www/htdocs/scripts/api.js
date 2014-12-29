@@ -50,6 +50,10 @@ var API = (function($) {
         return post(request, parameters);
     };
 
+    api.star = function(item_id) {
+        var request = 'items/' + item_id;
+        var parameters = { 'change-state': 'starred' };
+
         return post(request, parameters);
     };
 
