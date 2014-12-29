@@ -38,14 +38,17 @@ var API = (function($) {
 
     api.mark_read = function(item_id) {
         var request = 'items/' + item_id;
-        var parameters = { 'mark-read': 1 };
+        var parameters = { 'change-state': 'read' };
 
         return post(request, parameters);
     };
 
     api.mark_unread = function(item_id) {
         var request = 'items/' + item_id;
-        var parameters = { 'mark-read': 0 };
+        var parameters = { 'change-state': 'unread' };
+
+        return post(request, parameters);
+    };
 
         return post(request, parameters);
     };
