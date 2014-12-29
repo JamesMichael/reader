@@ -166,7 +166,7 @@ POST '/items/:id' => sub {
         if ($action eq 'change-state') {
             my $new_state = $actions->{$action} || 'error';
             my $state = $model->resultset('State')->search({
-                    'me.state' => $value,
+                    'me.state' => $new_state,
             })->single;
             $item->state($state);
             next;
