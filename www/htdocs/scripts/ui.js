@@ -61,6 +61,29 @@ var UI = (function($) {
             item.find('.item-star').attr('class', 'glyphicon glyphicon-star-empty item-star');
         }
 
+        // add a click handler to the star icon
+        item.find('.item-star').unbind('click');
+        item.find('.item-star').on('click', function(event) {
+            if (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+
+            var promise;
+            if (item_state == 'starred') {
+                promise = API.mark_read(item_id);
+            } else {
+                promise = API.star(item_id);
+            }
+
+            promise.success(function(data) {
+                var new_state = item_state == 'starred' ? 'read' : 'starred';
+                update_item_state(item_id, new_state);
+            });
+
+            return false;
+        });
+
         // replace existing toggle action
         item.find('.item-actions .toggle-state').remove();
         item.find('.item-actions').append(toggle_state_element);
