@@ -69,17 +69,7 @@ var UI = (function($) {
                 event.preventDefault();
             }
 
-            var promise;
-            if (item_state == 'starred') {
-                promise = API.mark_read(item_id);
-            } else {
-                promise = API.star(item_id);
-            }
-
-            promise.success(function(data) {
-                var new_state = item_state == 'starred' ? 'read' : 'starred';
-                update_item_state(item_id, new_state);
-            });
+            toggle_star(item_state, item_id);
 
             return false;
         });
@@ -291,6 +281,20 @@ var UI = (function($) {
         click_event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, true, false, false, false, 0, null);
         link.dispatchEvent(click_event);
     };
+
+    function toggle_star(item_state, item_id) {
+        var promise;
+        if (item_state == 'starred') {
+            promise = API.mark_read(item_id);
+        } else {
+            promise = API.star(item_id);
+        }
+
+        promise.success(function(data) {
+            var new_state = item_state == 'starred' ? 'read' : 'starred';
+            update_item_state(item_id, new_state);
+        });
+    }
 
     return ui;
 }($));
