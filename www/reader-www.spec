@@ -1,5 +1,5 @@
 Name:		reader-www
-Version:	0.4
+Version:	0.5
 Release:	1%{?dist}
 Summary:	Reader Web server files
 
@@ -54,6 +54,11 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Jan 29 2015 <James Michael> - 0.5-1
+- Add version parameter to JavaScript files
+- Remove inline-scripts
+- Add Content-Security-Policy header
+
 * Mon Dec 29 2014 <James Michael> - 0.4-1
 - Add support for 'starred' item state
 
