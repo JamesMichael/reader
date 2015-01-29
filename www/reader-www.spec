@@ -48,6 +48,7 @@ rm -rf %{buildroot}
 
 /vhosts/reader/htdocs/index.html
 /vhosts/reader/htdocs/scripts/api.js
+/vhosts/reader/htdocs/scripts/app.js
 /vhosts/reader/htdocs/scripts/ui.js
 /vhosts/reader/htdocs/style/reader.css
 
