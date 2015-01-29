@@ -21,7 +21,7 @@ Webserver related files for reader.
 
 
 %build
-#%%configure
+find htdocs/ -type f -exec sed --in-place 's/{READER_VERSION}/%{version}-%{release}/g' {} \;
 
 
 %install
